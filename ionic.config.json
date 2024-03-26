@@ -1,0 +1,7 @@
+{
+  "name": "Zippy App",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular-standalone"
+}
