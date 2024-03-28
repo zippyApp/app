@@ -1,0 +1,11 @@
+<ion-list >
+  @for (station of stations; track station) {
+    <ion-item (click)="flyTo(station)" button checked>
+      <ion-label>
+        <h2>{{ station }}</h2>
+        <p>Cra 27#34-53</p>
+        </ion-label>
+    </ion-item>
+
+  }
+</ion-list>
