@@ -45,8 +45,7 @@
   >
     <ng-template>
       <ion-content class="ion-padding">
-        <ion-searchbar (ionInput)="onQueryChanged($event.target.value)" placeholder="Search"></ion-searchbar>
-        <app-search-bar-results (selected)="closeModal($event)" [stations]="stationsFilter">
+        <app-search-bar-results (selected)="closeModal($event)">
 
         </app-search-bar-results>
       </ion-content>

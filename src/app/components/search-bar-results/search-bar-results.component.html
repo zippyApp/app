@@ -1,8 +1,9 @@
+<ion-searchbar (ionInput)="onQueryChanged($event.target.value)" placeholder="Search"></ion-searchbar>
 <ion-list >
-  @for (station of stations; track station) {
+  @for (station of stationsFilter; track station) {
     <ion-item (click)="flyTo(station)" button checked>
       <ion-label>
-        <h2>{{ station }}</h2>
+        <h2>{{ station.nombreEstacion }}</h2>
         <p>Cra 27#34-53</p>
         </ion-label>
     </ion-item>

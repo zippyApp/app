@@ -1,12 +1,19 @@
 import { Geolocation } from '@capacitor/geolocation';
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Station } from '../interfaces/station';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PlacesService {
 
+  private http:HttpClient = inject(HttpClient);
+
   public userLocation?: [number, number];
+  public isLoadingStations: boolean = false;
+  public stations: Station[] = [];
 
   get isUserLocationReady():boolean{
     return !!this.userLocation;
@@ -14,6 +21,7 @@ export class PlacesService {
 
   constructor() {
     this.printCurrentPosition();
+    this.getStations();
   }
 
   public async printCurrentPosition(){
@@ -24,6 +32,17 @@ export class PlacesService {
   }
 
   public getStations(){
+    this.isLoadingStations = true;
+    return this.http.get<Station[]>(environment.backStations+'getEstacionesAbiertasMapa',{
+      // headers: new HttpHeaders().set("Access-Control-Allow-Origin", "*")
+    })
+      .subscribe(
+        stations =>{
+          this.stations = stations;
+          this.isLoadingStations = false;
+        }
+      )
+
 
   }
 

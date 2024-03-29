@@ -15,13 +15,16 @@ import {
 } from 'ionicons/icons'
 import { MapService } from 'src/app/services/map.service';
 import { SearchBarResultsComponent } from 'src/app/components/search-bar-results/search-bar-results.component';
+import { HttpClientModule } from '@angular/common/http';
+import { Station } from 'src/app/interfaces/station';
 
 @Component({
   selector: 'app-map',
   templateUrl: './map.page.html',
   styleUrls: ['./map.page.scss'],
   standalone: true,
-  imports: [IonicModule, CommonModule, FormsModule, LoadingComponent,MapViewComponent,ZippyLogoComponent,SearchBarResultsComponent]
+  imports: [IonicModule, CommonModule, FormsModule, LoadingComponent,MapViewComponent,ZippyLogoComponent,SearchBarResultsComponent,HttpClientModule],
+  providers:[HttpClientModule]
 })
 export class MapPage  {
   @ViewChild('modal') modal?:IonModal;
@@ -30,19 +33,7 @@ export class MapPage  {
   private mapService:MapService = inject(MapService);
   private formBuilder:FormBuilder = inject(FormBuilder);
 
-  public stations = [
-    'Amsterdam',
-    'Buenos Aires',
-    'Cairo',
-    'Geneva',
-    'Hong Kong',
-    'Istanbul',
-    'London',
-    'Madrid',
-    'New York',
-    'Panama City',
-  ];
-  public stationsFilter = [...this.stations];
+
 
   form?:FormGroup;
 
@@ -57,11 +48,20 @@ export class MapPage  {
     this.form = this.formBuilder.group({
       station:['']
     })
-    this.select?.open();
+    // this.placesServices.getStations()
+
+
    }
+   ionViewWillEnter(){
+   }
+
    ngAfterViewInit(){
-    // this.mapService.createMarkersFromPlaces(this.stations)
+
+
+    // if(!this.placesServices.isUserLocationReady) throw Error('No hay ubicación del usuario');
+    // this.mapService.createMarkersFromPlaces(this.stations, this.placesServices.userLocation!);
    }
+
 
 
   get isUserLocationReady(){
@@ -77,12 +77,7 @@ export class MapPage  {
   }
 
 
-  onQueryChanged(query:string | null = ''){
-    if(query?.length ===0) this.stationsFilter = [...this.stations];
 
-    this.stationsFilter = this.stations.filter((station) => station.toLowerCase().indexOf(query!) > -1);
-
-  }
 
   closeModal(close:boolean){
     if(close) this.modal?.dismiss();
