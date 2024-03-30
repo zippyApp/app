@@ -15,23 +15,125 @@
     <app-loading>
     </app-loading>
   }@else {
+
+    @if(false){
+      <ion-fab slot="fixed" vertical="top" horizontal="end" [edge]="true">
+        <div class="trip-container">
+          <ion-row> Distancia: <strong>{{distance}} kms</strong>
+          </ion-row>
+          <ion-row> Duración: <strong>{{duration}} min</strong>
+          </ion-row>
+        </div>
+      </ion-fab>
+
+    }
     <!--NO DESCOMENTAR-->
-    <!-- <app-map-view>
-    </app-map-view> -->
+    <app-map-view>
+    </app-map-view>
 
     <app-zippy-logo></app-zippy-logo>
-    <ion-fab  slot="fixed" vertical="bottom" horizontal="start">
-      <ion-fab-button (click)="goToMyLocation()" >
-        <ion-icon name="locate-outline"></ion-icon>
-      </ion-fab-button>
-    </ion-fab>
+      <!-- <ion-fab  slot="fixed" vertical="bottom" horizontal="start">
+        <ion-fab-button (click)="goToMyLocation()" >
+          <ion-icon name="locate-outline"></ion-icon>
+        </ion-fab-button>
+      </ion-fab> -->
 
-    <ion-fab slot="fixed" horizontal="center" vertical="bottom">
-      <ion-fab-button id="open-modal" class="station-button">
-        <ion-icon name="bicycle"></ion-icon>
-        Seleccionar estación
-      </ion-fab-button>
-    </ion-fab>
+      @switch (stage) {
+        @case (0) {
+          <ion-fab slot="fixed" vertical="top" horizontal="center">
+            <div class="trip-container">
+              <ion-row>
+                <h6 class="text-center">¿A donde vamos?</h6>
+              </ion-row>
+              <ion-row>
+                <p class="text-center">
+                  Selecciona una estación o buscala abajo
+                </p>
+              </ion-row>
+            </div>
+          </ion-fab>
+        }
+        @case (1) {
+          <ion-fab slot="fixed" vertical="top" horizontal="center">
+            <div class="trip-container">
+              <ion-row class="text-center">
+                <h6>Confirma tu estación de origen</h6>
+              </ion-row>
+            </div>
+          </ion-fab>
+        }
+        @case (2) {
+          <ion-fab slot="fixed" vertical="top" horizontal="center">
+            <div class="trip-container">
+              <ion-grid>
+                <ion-row class="d-flex" >
+                  <ion-col>
+                    <p>Origen:</p>
+                  </ion-col>
+                  <ion-col>
+                    <strong>{{originStation}}</strong>
+                  </ion-col>
+                  <ion-col>
+                    <ion-button  (click)="changeStation(4)" class="button">
+                      Cambiar
+                    </ion-button>
+                  </ion-col>
+                </ion-row>
+                <ion-row class="d-flex">
+                  <ion-col>
+                    <p>
+                      Destino:
+                    </p>
+                  </ion-col>
+                  <ion-col>
+                    <strong>{{destinationStation}}</strong>
+                  </ion-col>
+                  <ion-col>
+                    <ion-button  (click)="changeStation(3)" class="button">
+                      Cambiar
+                    </ion-button>
+                  </ion-col>
+                </ion-row>
+
+              </ion-grid>
+              <ion-row class="d-flex">
+                <ion-fab-button (click)="swapStations()" size="small" class="text-center"><ion-icon name="swap-vertical-outline"></ion-icon></ion-fab-button>
+              </ion-row>
+            </div>
+
+          </ion-fab>
+        }
+        @case (3) {
+          <ion-fab slot="fixed" vertical="top" horizontal="center">
+            <div class="trip-container">
+              <ion-row class="text-center">
+                <h6>Confirma tu estación de origen</h6>
+              </ion-row>
+            </div>
+          </ion-fab>
+        }
+        @case (4) {
+          <ion-fab slot="fixed" vertical="top" horizontal="center">
+            <div class="trip-container">
+              <ion-row>
+                <h6 class="text-center">Confirma tu estación de destino</h6>
+              </ion-row>
+            </div>
+          </ion-fab>
+
+        }
+      }
+
+
+      @if((stage === 0 || stage ==1)){
+
+        <ion-fab slot="fixed" horizontal="center" vertical="bottom">
+          <ion-fab-button id="open-modal" class="station-button">
+            <ion-icon name="bicycle"></ion-icon>
+            Seleccionar estación
+          </ion-fab-button>
+        </ion-fab>
+      }
 
     <ion-modal
     #modal

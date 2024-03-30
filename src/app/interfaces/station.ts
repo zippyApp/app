@@ -6,3 +6,13 @@ export interface Station{
   longitud: number;
 
 }
+
+export enum Stage{
+  'DESTINO' ,
+  'ORIGEN' ,
+  'CONFIRMACION' ,
+  'CAMBIO_DESTINO',
+  'CAMBIO_ORIGEN',
+  'LLEGADA-ORIGEN' ,
+  'LLEGADA-DESTINO' }
+

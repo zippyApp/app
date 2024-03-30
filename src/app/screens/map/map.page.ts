@@ -8,15 +8,15 @@ import { MapViewComponent } from 'src/app/components/map-view/map-view.component
 import { ZippyLogoComponent } from 'src/app/components/zippy-logo/zippy-logo.component';
 import { addIcons } from 'ionicons';
 import { IonModal } from '@ionic/angular';
-import { IonIcon } from '@ionic/angular/standalone';
 import {
   locateOutline,
-  bicycle
+  bicycle,
+  swapVerticalOutline
 } from 'ionicons/icons'
 import { MapService } from 'src/app/services/map.service';
 import { SearchBarResultsComponent } from 'src/app/components/search-bar-results/search-bar-results.component';
 import { HttpClientModule } from '@angular/common/http';
-import { Station } from 'src/app/interfaces/station';
+import { Stage, Station } from 'src/app/interfaces/station';
 
 @Component({
   selector: 'app-map',
@@ -34,6 +34,25 @@ export class MapPage  {
   private formBuilder:FormBuilder = inject(FormBuilder);
 
 
+  get stage(){
+    return this.mapService.stage;
+  }
+
+  get distance(){
+    return this.mapService.distance;
+  }
+
+  get duration(){
+    return this.mapService.duration;
+  }
+
+  get originStation(){
+    return this.mapService.originStation;
+  }
+
+  get destinationStation(){
+    return this.mapService.destinationStation;
+  }
 
   form?:FormGroup;
 
@@ -41,14 +60,15 @@ export class MapPage  {
 
 
   constructor() {
-    addIcons({ locateOutline,bicycle });
+    addIcons({ locateOutline,bicycle,swapVerticalOutline });
    }
 
-   ngOnInit(){
+   async ngOnInit(){
     this.form = this.formBuilder.group({
       station:['']
     })
-    // this.placesServices.getStations()
+    await this.placesServices.printCurrentPosition();
+    this.placesServices.getStations()
 
 
    }
@@ -62,6 +82,10 @@ export class MapPage  {
     // this.mapService.createMarkersFromPlaces(this.stations, this.placesServices.userLocation!);
    }
 
+  changeStation(stage:Stage){
+    this.modal?.present();
+    this.mapService.setStage(stage);
+  }
 
 
   get isUserLocationReady(){
@@ -83,4 +107,15 @@ export class MapPage  {
     if(close) this.modal?.dismiss();
 
   }
+
+  swapStations(){
+    const aux = this.destinationStation;
+    if(this.originStation == null || this.destinationStation == null)return;
+    this.mapService.setDestinationStation(this.originStation!);
+    this.mapService.setOriginStation(aux!);
+
+  }
+
+
+
 }

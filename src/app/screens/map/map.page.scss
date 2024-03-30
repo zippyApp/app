@@ -1,9 +1,9 @@
 ion-fab-button {
-  --background: #b7f399;
-  --background-activated: #87d361;
-  --background-hover: #a3e681;
+  // --background: #b7f399;
+  // --background-activated: #87d361;
+  // --background-hover: #a3e681;
   --box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.3), 0px 1px 3px 1px rgba(0, 0, 0, 0.15);
-  --color: black;
+  --color: white;
 }
 ion-fab-button.station-button{
   width: 200px;
@@ -14,3 +14,24 @@ ion-fab-button.station-button{
   --box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.3), 0px 1px 3px 1px rgba(0, 0, 0, 0.15);
   --color: black;
 }
+
+.trip-container{
+  padding: 10px;
+  border-radius: 10px;
+  background-color: white;
+  box-shadow: 0px 10px 0px rgba(0,0,0,0.2);
+
+}
+
+.text-center{
+  margin: 0 auto;
+}
+
+.d-flex{
+  display: flex;
+  align-items: center;
+
+}
+.button{
+  flex-direction: row-reverse;
+  }

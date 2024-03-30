@@ -1,7 +1,9 @@
-import { Injectable, inject } from '@angular/core';
+import { Injectable, WritableSignal, inject, signal } from '@angular/core';
 import { AnySourceData, LngLatBounds, LngLatLike, Map, Marker, Popup } from 'mapbox-gl';
 import { DirectionsApiClient } from '../api/directionsApiClient';
 import { DirectionsResponse, Route } from '../interfaces/directions';
+import { Stage, Station } from '../interfaces/station';
+import { ActionSheetController } from '@ionic/angular';
 
 @Injectable({
   providedIn: 'root'
@@ -9,10 +11,18 @@ import { DirectionsResponse, Route } from '../interfaces/directions';
 export class MapService {
 
   private directionsApi:DirectionsApiClient = inject(DirectionsApiClient);
+  private actionSheetCtrl: ActionSheetController = inject(ActionSheetController);
+  stage:Stage = Stage.DESTINO;
+
+  originStation?:string;
+  destinationStation?:string;
 
   private map?:Map;
   private markers:Marker[] = [];
 
+
+  distance?:number;
+  duration?:number;
   get isMapReady(){
     return !!this.map;
   }
@@ -21,6 +31,16 @@ export class MapService {
 
   setMap(map:Map){
     this.map = map;
+  }
+
+  setStage(stage:Stage){
+    this.stage = stage;
+  }
+  setOriginStation(station:string){
+    this.originStation = station;
+  }
+  setDestinationStation(station:string){
+    this.destinationStation = station;
   }
 
   flyTo(coords:LngLatLike){
@@ -32,22 +52,48 @@ export class MapService {
     })
   }
 
-  createMarkersFromPlaces(stations:any[], currentLocation:[number,number]){
+  createMarkersFromPlaces(stations:Station[], currentLocation:[number,number]){
     if(!this.map) throw Error('No hay mapa');
 
     this.markers.forEach(marker => marker.remove());
     const newMarkers:any[] = [];
     stations.forEach(station => {
-      const [lng, lat] = station.cords;
 
+      const coords = [station.longitud, station.latitud] as [number, number];
       const popup = new Popup()
         .setHTML(
-          `<h6>${station.nombre}</h6>
-          <span>${station.direccion}</span>
+          `<h6>${station.nombreEstacion}</h6>
+          <span>Cra 27#2</span>
           `
-        );
+        ).on('open',async()=>{
+          if(!(this.stage === Stage.ORIGEN || this.stage === Stage.DESTINO || this.stage === Stage.CAMBIO_DESTINO || this.stage === Stage.CAMBIO_ORIGEN)) return;
+          const confirm = await this.confirmStation(station);
+          if(confirm){
+            if(this.stage === Stage.DESTINO){
+              this.destinationStation = station.nombreEstacion;
+              this.setStage(Stage.ORIGEN);
+            }
+            else if(this.stage === Stage.ORIGEN){
+              if(this.destinationStation === station.nombreEstacion) return;
+              this.originStation = station.nombreEstacion;
+              this.setStage(Stage.CONFIRMACION);
+            }
+            else if(this.stage === Stage.CAMBIO_DESTINO){
+              if(this.originStation === station.nombreEstacion) return;
+              this.destinationStation = station.nombreEstacion;
+              this.setStage(Stage.CONFIRMACION);
+            }
+            else if(this.stage === Stage.CAMBIO_ORIGEN){
+              if(this.destinationStation === station.nombreEstacion) return;
+              this.originStation = station.nombreEstacion;
+              this.setStage(Stage.CONFIRMACION);
+            }
+
+          }
+        // this.getDirections(station,currentLocation);
+        });
         const newMarker = new Marker({color:'red'})
-          .setLngLat([lng, lat])
+          .setLngLat(coords)
           .setPopup(popup)
           .addTo(this.map!);
         newMarkers.push(newMarker);
@@ -67,6 +113,15 @@ export class MapService {
     })
   }
 
+  private getDirections(station:Station, currenLocation:[number, number]){
+    const start = currenLocation;
+    const end =  [station.longitud, station.latitud] as [number, number];
+
+    this.getRouteBetweenPoints(start, end);
+  }
+
+
+
   getRouteBetweenPoints(start:[number, number], end:[number,number]){
     this.directionsApi.get<DirectionsResponse>(`/${start.join(',')};${end.join(',')}`)
       .subscribe(resp => this.drawPolyline(resp.routes[0]));
@@ -74,7 +129,10 @@ export class MapService {
   }
 
   private drawPolyline(route:Route){
-    console.log(route.distance, route.duration );
+    this.distance = route.distance/1000;
+    this.distance = Math.round(this.distance * 100) / 100;
+    this.duration = Math.floor(route.duration/60);
+
 
     if(!this.map) throw Error('No hay mapa inicializado');
     const coords = route.geometry.coordinates;
@@ -123,6 +181,29 @@ export class MapService {
         'line-width':3
       }
     })
+
+  }
+
+  async confirmStation(station:Station){
+    const actionSheet = await this.actionSheetCtrl.create({
+      header: `¿Esta seguro que desea elegir la estación ${station.nombreEstacion}?`,
+      buttons: [
+        {
+          text: 'Si',
+          role: 'confirm',
+        },
+        {
+          text: 'No',
+          role: 'cancel',
+        },
+      ],
+    });
+
+    actionSheet.present();
+
+    const { role } = await actionSheet.onWillDismiss();
+
+    return role === 'confirm';
 
   }
 }

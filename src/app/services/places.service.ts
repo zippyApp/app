@@ -3,6 +3,7 @@ import { Injectable, inject } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Station } from '../interfaces/station';
 import { environment } from 'src/environments/environment';
+import { MapService } from './map.service';
 
 @Injectable({
   providedIn: 'root'
@@ -10,6 +11,7 @@ import { environment } from 'src/environments/environment';
 export class PlacesService {
 
   private http:HttpClient = inject(HttpClient);
+  private mapService:MapService = inject(MapService);
 
   public userLocation?: [number, number];
   public isLoadingStations: boolean = false;
@@ -20,8 +22,6 @@ export class PlacesService {
   }
 
   constructor() {
-    this.printCurrentPosition();
-    this.getStations();
   }
 
   public async printCurrentPosition(){
@@ -32,6 +32,10 @@ export class PlacesService {
   }
 
   public getStations(){
+
+
+    // if ( !this.userLocation ) throw Error('No hay userLocation');
+
     this.isLoadingStations = true;
     return this.http.get<Station[]>(environment.backStations+'getEstacionesAbiertasMapa',{
       // headers: new HttpHeaders().set("Access-Control-Allow-Origin", "*")
@@ -40,6 +44,7 @@ export class PlacesService {
         stations =>{
           this.stations = stations;
           this.isLoadingStations = false;
+          this.mapService.createMarkersFromPlaces(stations,this.userLocation!)
         }
       )
 

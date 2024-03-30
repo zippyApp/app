@@ -23,7 +23,7 @@ export class SearchBarResultsComponent  implements OnInit {
     return this.placesService.stations;
    }
    public stationsFilter = [...this.stations];
-  selectedId:string = '';
+  selectedId?:number;
 
   get isLoadingPlaces(){
     return this.placesService.getStations();
@@ -35,10 +35,10 @@ export class SearchBarResultsComponent  implements OnInit {
   ngOnInit() {}
 
 
-  flyTo(station:any){
-    // this.selectedId = station.id;
-    // const [lng, lat] = station;
-    // this.mapService.flyTo([lng, lat]);
+  flyTo(station:Station){
+    this.selectedId = station.id;
+    const coords = [station.longitud, station.latitud] as [number, number];
+    this.mapService.flyTo(coords);
     this.selected.emit(true);
   }
 
@@ -46,7 +46,7 @@ export class SearchBarResultsComponent  implements OnInit {
     if(!this.placesService.userLocation) throw Error('No hay ubicación del usuario');
 
     const start = this.placesService.userLocation!;
-    const end =  [station.latitud, station.longitud] as [number, number];
+    const end =  [station.longitud, station.latitud] as [number, number];
 
     this.mapService.getRouteBetweenPoints(start, end);
   }
