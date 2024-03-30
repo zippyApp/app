@@ -16,13 +16,31 @@
     </app-loading>
   }@else {
 
-    @if(false){
-      <ion-fab slot="fixed" vertical="top" horizontal="end" [edge]="true">
-        <div class="trip-container">
-          <ion-row> Distancia: <strong>{{distance}} kms</strong>
-          </ion-row>
-          <ion-row> Duración: <strong>{{duration}} min</strong>
-          </ion-row>
+    @if(stage === 6){
+      <ion-fab slot="fixed" vertical="top" horizontal="center" [edge]="true">
+        <div class="trip-container small">
+          <ion-grid>
+            <ion-row>
+                <p> Distancia Origen:
+                  <strong class="red">{{originDistance}} kms</strong>
+                </p>
+                <p>
+                   Duración origen
+                  <strong class="green">{{originDuration}} min</strong>
+                </p>
+            </ion-row>
+            <ion-row>
+                <p> Distancia Destino:
+                  <strong class="red">{{destinationDistance}} kms</strong>
+                </p>
+                <p>
+                   Duración destino
+                  <strong class="green">{{destinationDuration}} min</strong>
+                </p>
+
+            </ion-row>
+          </ion-grid>
+
         </div>
       </ion-fab>
 
@@ -31,7 +49,7 @@
     <app-map-view>
     </app-map-view>
 
-    <app-zippy-logo></app-zippy-logo>
+    <!-- <app-zippy-logo></app-zippy-logo> -->
       <!-- <ion-fab  slot="fixed" vertical="bottom" horizontal="start">
         <ion-fab-button (click)="goToMyLocation()" >
           <ion-icon name="locate-outline"></ion-icon>
@@ -74,7 +92,7 @@
                     <strong>{{originStation}}</strong>
                   </ion-col>
                   <ion-col>
-                    <ion-button  (click)="changeStation(4)" class="button">
+                    <ion-button  (click)="changeStage(4)" class="button">
                       Cambiar
                     </ion-button>
                   </ion-col>
@@ -89,7 +107,7 @@
                     <strong>{{destinationStation}}</strong>
                   </ion-col>
                   <ion-col>
-                    <ion-button  (click)="changeStation(3)" class="button">
+                    <ion-button  (click)="changeStage(3)" class="button">
                       Cambiar
                     </ion-button>
                   </ion-col>
@@ -125,13 +143,43 @@
       }
 
 
-      @if((stage === 0 || stage ==1)){
+      @if((stage === 0 || stage ==1 || stage == 3 || stage == 4)){
 
         <ion-fab slot="fixed" horizontal="center" vertical="bottom">
           <ion-fab-button id="open-modal" class="station-button">
             <ion-icon name="bicycle"></ion-icon>
             Seleccionar estación
           </ion-fab-button>
+        </ion-fab>
+      }
+
+      @if(stage === 2){
+        <ion-fab slot="fixed" horizontal="center" vertical="bottom">
+          <ion-fab-button (click)="confirmTrip()"class="station-button">
+            <ion-icon name="checkmark-outline"></ion-icon>
+            Vamos!
+          </ion-fab-button>
+        </ion-fab>
+      }
+      @if (stage ===5) {
+        <ion-fab slot="fixed" horizontal="center" vertical="bottom">
+          <div class="trip-container">
+            <ion-grid>
+              <ion-row>
+                <h6 class="text-center">
+                  ¿Cuando quieres abordar?
+                </h6>
+              </ion-row>
+              <ion-row>
+                <ion-col>
+                  <ion-fab-button (click)="startTrip()" class="confirm-button">Ahora mismo</ion-fab-button>
+                </ion-col>
+                <ion-col>
+                  <ion-fab-button (click)="otherMoment()" class="confirm-button">En otro momento</ion-fab-button>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+          </div>
         </ion-fab>
       }
 

@@ -42,14 +42,7 @@ export class SearchBarResultsComponent  implements OnInit {
     this.selected.emit(true);
   }
 
-  getDirections(station:Station){
-    if(!this.placesService.userLocation) throw Error('No hay ubicación del usuario');
 
-    const start = this.placesService.userLocation!;
-    const end =  [station.longitud, station.latitud] as [number, number];
-
-    this.mapService.getRouteBetweenPoints(start, end);
-  }
 
   onQueryChanged(query:string | null = ''){
     if(query?.length ===0) this.stationsFilter = [...this.stations];

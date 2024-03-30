@@ -1,4 +1,5 @@
 import { AfterViewInit, Component, ElementRef, EventEmitter, ViewChild, inject } from '@angular/core';
+import { Geolocation } from '@capacitor/geolocation';
 import {Map, Popup, Marker, NavigationControl, GeolocateControl} from 'mapbox-gl';
 import { MapService } from 'src/app/services/map.service';
 import { PlacesService } from 'src/app/services/places.service';
@@ -54,8 +55,9 @@ export class MapViewComponent  implements AfterViewInit {
           trackUserLocation: true,
           // Draw an arrow next to the location dot to indicate which direction the device is heading.
           showUserHeading: true
-      }),"bottom-left"
+      },),"bottom-left"
     )
+    map.addControl(new NavigationControl(),"bottom-left")
   }
 
 }

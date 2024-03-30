@@ -21,8 +21,10 @@ export class MapService {
   private markers:Marker[] = [];
 
 
-  distance?:number;
-  duration?:number;
+  originDistance?:number;
+  destinationDistance?:number;
+  originDuration?:number;
+  destinationDuration?:number;
   get isMapReady(){
     return !!this.map;
   }
@@ -113,26 +115,31 @@ export class MapService {
     })
   }
 
-  private getDirections(station:Station, currenLocation:[number, number]){
+  private getDirections(station:Station, currenLocation:[number, number], color:string, routeId:string){
     const start = currenLocation;
     const end =  [station.longitud, station.latitud] as [number, number];
 
-    this.getRouteBetweenPoints(start, end);
+    this.getRouteBetweenPoints(start, end, color, routeId);
   }
 
 
 
-  getRouteBetweenPoints(start:[number, number], end:[number,number]){
+  getRouteBetweenPoints(start:[number, number], end:[number,number], color:string, routeId:string){
     this.directionsApi.get<DirectionsResponse>(`/${start.join(',')};${end.join(',')}`)
-      .subscribe(resp => this.drawPolyline(resp.routes[0]));
+      .subscribe(resp => this.drawPolyline(resp.routes[0],color,routeId));
 
   }
 
-  private drawPolyline(route:Route){
-    this.distance = route.distance/1000;
-    this.distance = Math.round(this.distance * 100) / 100;
-    this.duration = Math.floor(route.duration/60);
-
+  private drawPolyline(route:Route,color:string, routeId:string){
+    if(routeId === 'RouteOrigin'){
+    this.originDistance = route.distance/1000;
+    this.originDistance = Math.round(this.originDistance * 100) / 100;
+    this.originDuration = Math.floor(route.duration/60);
+    }else{
+    this.destinationDistance = route.distance/1000;
+    this.destinationDistance = Math.round(this.destinationDistance * 100) / 100;
+    this.destinationDuration = Math.floor(route.duration/60);
+    }
 
     if(!this.map) throw Error('No hay mapa inicializado');
     const coords = route.geometry.coordinates;
@@ -162,22 +169,22 @@ export class MapService {
       }
     }
 
-    if(this.map.getLayer('RouteString')) {
-      this.map.removeLayer('RouteString');
-      this.map.removeSource('RouteString');
+    if(this.map.getLayer(routeId)) {
+      this.map.removeLayer(routeId);
+      this.map.removeSource(routeId);
     }
 
-    this.map.addSource('RouteString', sourceData);
+    this.map.addSource(routeId, sourceData);
     this.map.addLayer({
-      id:'RouteString',
+      id:routeId,
       type:'line',
-      source:'RouteString',
+      source:routeId,
       layout:{
-        'line-join':'round',
-        'line-cap':'round'
+        'line-join':'bevel',
+        'line-cap':'butt'
       },
       paint:{
-        'line-color':'black',
+        'line-color':color,
         'line-width':3
       }
     })

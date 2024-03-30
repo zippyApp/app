@@ -15,6 +15,17 @@ ion-fab-button.station-button{
   --color: black;
 }
 
+ion-fab-button.confirm-button{
+  width: 120px;
+  --background: #ffe100;
+  --background-activated: #fadf56;
+  --background-hover: #edd988;
+  --border-radius: 15px;
+  --box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.3), 0px 1px 3px 1px rgba(0, 0, 0, 0.15);
+  --color: black;
+}
+
+
 .trip-container{
   padding: 10px;
   border-radius: 10px;
@@ -25,6 +36,7 @@ ion-fab-button.station-button{
 
 .text-center{
   margin: 0 auto;
+  text-align: center;
 }
 
 .d-flex{
@@ -35,3 +47,35 @@ ion-fab-button.station-button{
 .button{
   flex-direction: row-reverse;
   }
+
+.origin{
+  color:red;
+}
+.destination{
+  color:green;
+}
+
+
+
+@media (max-width: 300px) {
+  .trip-container{
+    padding: 5px;
+    gap: 1px;
+    ion-row{
+      gap: 1px;
+      margin: 1px;
+    }
+    font-size: 12px;
+  }
+  .small{
+    font-size: 10px;
+  }
+  ion-fab-button.station-button{
+    width: 100px;
+    font-size: 10px;
+  }
+  ion-fab-button.confirm-button{
+    width: 86px;
+    font-size: 12px;
+  }
+}

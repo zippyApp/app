@@ -11,7 +11,8 @@ import { IonModal } from '@ionic/angular';
 import {
   locateOutline,
   bicycle,
-  swapVerticalOutline
+  swapVerticalOutline,
+  checkmarkOutline,
 } from 'ionicons/icons'
 import { MapService } from 'src/app/services/map.service';
 import { SearchBarResultsComponent } from 'src/app/components/search-bar-results/search-bar-results.component';
@@ -38,12 +39,19 @@ export class MapPage  {
     return this.mapService.stage;
   }
 
-  get distance(){
-    return this.mapService.distance;
+  get originDuration(){
+    return this.mapService.originDuration;
   }
 
-  get duration(){
-    return this.mapService.duration;
+  get originDistance(){
+    return this.mapService.originDistance;
+  }
+  get destinationDistance(){
+    return this.mapService.destinationDistance;
+  }
+
+  get destinationDuration(){
+    return this.mapService.destinationDuration;
   }
 
   get originStation(){
@@ -60,7 +68,7 @@ export class MapPage  {
 
 
   constructor() {
-    addIcons({ locateOutline,bicycle,swapVerticalOutline });
+    addIcons({ locateOutline,bicycle,swapVerticalOutline, checkmarkOutline});
    }
 
    async ngOnInit(){
@@ -82,7 +90,7 @@ export class MapPage  {
     // this.mapService.createMarkersFromPlaces(this.stations, this.placesServices.userLocation!);
    }
 
-  changeStation(stage:Stage){
+  changeStage(stage:Stage){
     this.modal?.present();
     this.mapService.setStage(stage);
   }
@@ -116,6 +124,33 @@ export class MapPage  {
 
   }
 
+  confirmTrip(){
+    this.mapService.setStage(Stage.CONFIRMANDO);
+  }
+  startTrip(){
+    if(this.originStation == null || this.destinationStation == null) return;
+    if(!this.placesServices.userLocation) throw Error('No hay ubicación del usuario');
 
+
+    this.mapService.setStage(Stage.CONFIRMADO)
+    const originStation =  this.searchStation(this.originStation!);
+    const coordsOrigin = [originStation?.longitud, originStation?.latitud] as [number, number];
+    const destinationStation =  this.searchStation(this.destinationStation!);
+    const coordsDestination = [destinationStation?.longitud, destinationStation?.latitud] as [number, number];
+    const currentLocation = this.placesServices.userLocation!;
+
+    this.mapService.getRouteBetweenPoints(currentLocation, coordsOrigin!,'red','RouteOrigin');
+    this.mapService.getRouteBetweenPoints(coordsOrigin, coordsDestination,'green','RouteDestination');
+  }
+
+  searchStation(nombreEstacion:string){
+     const station=  this.placesServices.stations.find(station => station.nombreEstacion.toLowerCase() === nombreEstacion.toLowerCase());
+     return station;
+  }
+
+
+  otherMoment(){
+    this.mapService.setStage(Stage.CONFIRMACION);
+  }
 
 }

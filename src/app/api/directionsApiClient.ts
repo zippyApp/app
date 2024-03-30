@@ -21,7 +21,7 @@ export class DirectionsApiClient extends HttpClient {
         alternatives:false,
         geometries:'geojson',
         language:'es',
-        overview:'simplified',
+        overview:'full',
         steps:false,
         access_token:environment.apiKey,
       }
