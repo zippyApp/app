@@ -21,8 +21,10 @@ export class SearchBarResultsComponent  implements OnInit {
 
   get stations(){
     return this.placesService.stations;
-   }
-   public stationsFilter = [...this.stations];
+  }
+  
+  public stationsFilter = [...this.stations];
+  
   selectedId?:number;
 
   get isLoadingPlaces(){
@@ -37,7 +39,7 @@ export class SearchBarResultsComponent  implements OnInit {
 
   flyTo(station:Station){
     this.selectedId = station.id;
-    const coords = [station.longitud, station.latitud] as [number, number];
+    const coords = [station.longitude, station.latitude] as [number, number];
     this.mapService.flyTo(coords);
     this.selected.emit(true);
   }
@@ -47,7 +49,8 @@ export class SearchBarResultsComponent  implements OnInit {
   onQueryChanged(query:string | null = ''){
     if(query?.length ===0) this.stationsFilter = [...this.stations];
 
-    this.stationsFilter = this.stations.filter((station) => station.nombreEstacion.toLowerCase().indexOf(query!) > -1);
+    this.stationsFilter = this.stations.filter((station) => station.stationName.toLowerCase().indexOf(query ? query.toLowerCase() : '') > -1 ||
+                                                            station.stationAddress.toLowerCase().indexOf(query ? query.toLowerCase() : '') > -1);
 
   }
 

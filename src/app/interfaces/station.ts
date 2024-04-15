@@ -1,10 +1,19 @@
 export interface Station{
 
   id :number;
-  nombreEstacion: string;
-  latitud :number;
-  longitud: number;
+  stationName: string;
+  stationAddress: string;
+  latitude :number;
+  longitude: number;
+  stationStatus: StationStatus;
+  capacity: number;
+  lastMaintenance: Date;
 
+}
+
+export interface StationStatus{
+  id: number;
+  stationName: string;
 }
 
 export enum Stage{

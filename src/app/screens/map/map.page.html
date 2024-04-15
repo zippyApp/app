@@ -125,7 +125,7 @@
           <ion-fab slot="fixed" vertical="top" horizontal="center">
             <div class="trip-container">
               <ion-row class="text-center">
-                <h6>Confirma tu estación de origen</h6>
+                <h6>Confirma tu estación de destino</h6>
               </ion-row>
             </div>
           </ion-fab>
@@ -134,7 +134,7 @@
           <ion-fab slot="fixed" vertical="top" horizontal="center">
             <div class="trip-container">
               <ion-row>
-                <h6 class="text-center">Confirma tu estación de destino</h6>
+                <h6 class="text-center">Confirma tu estación de origen</h6>
               </ion-row>
             </div>
           </ion-fab>
@@ -143,12 +143,12 @@
       }
 
 
-      @if((stage === 0 || stage ==1 || stage == 3 || stage == 4)){
+      @if((stage === 0 || stage ===1 || stage === 3 || stage === 4)){
 
         <ion-fab slot="fixed" horizontal="center" vertical="bottom">
           <ion-fab-button id="open-modal" class="station-button">
             <ion-icon name="bicycle"></ion-icon>
-            Seleccionar estación
+            Buscar estación
           </ion-fab-button>
         </ion-fab>
       }

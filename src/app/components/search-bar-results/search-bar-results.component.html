@@ -3,8 +3,8 @@
   @for (station of stationsFilter; track station) {
     <ion-item (click)="flyTo(station)" button checked>
       <ion-label>
-        <h2>{{ station.nombreEstacion }}</h2>
-        <p>Cra 27#34-53</p>
+        <h2>{{ station.stationName }}</h2>
+        <p>{{station.stationAddress}}</p>
         </ion-label>
     </ion-item>
 

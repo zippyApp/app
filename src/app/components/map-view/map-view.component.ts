@@ -32,11 +32,13 @@ export class MapViewComponent  implements AfterViewInit {
       zoom: 9, // starting zoom
     });
 
-    const popup = new Popup()
+    const popup = new Popup({closeOnMove:true})
       .setHTML(
         `
-        <h1>Aquí estoy</h1>
-        <span>Estoy en este lugar del mundo </span>
+        <div style="color:black; text-align:center">
+        <h6 style="margin-top:0; margin-bottom:0;">Aquí estoy</h6>
+        <span>Esta es tu ubicación aproximada</span>
+        </div>
         `
         )
         .on('open',()=>{console.log('hola')});

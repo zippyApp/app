@@ -82,14 +82,7 @@ export class MapPage  {
    }
    ionViewWillEnter(){
    }
-
-   ngAfterViewInit(){
-
-
-    // if(!this.placesServices.isUserLocationReady) throw Error('No hay ubicación del usuario');
-    // this.mapService.createMarkersFromPlaces(this.stations, this.placesServices.userLocation!);
-   }
-
+   
   changeStage(stage:Stage){
     this.modal?.present();
     this.mapService.setStage(stage);
@@ -134,17 +127,17 @@ export class MapPage  {
 
     this.mapService.setStage(Stage.CONFIRMADO)
     const originStation =  this.searchStation(this.originStation!);
-    const coordsOrigin = [originStation?.longitud, originStation?.latitud] as [number, number];
+    const coordsOrigin = [originStation?.longitude, originStation?.latitude] as [number, number];
     const destinationStation =  this.searchStation(this.destinationStation!);
-    const coordsDestination = [destinationStation?.longitud, destinationStation?.latitud] as [number, number];
+    const coordsDestination = [destinationStation?.longitude, destinationStation?.latitude] as [number, number];
     const currentLocation = this.placesServices.userLocation!;
 
-    this.mapService.getRouteBetweenPoints(currentLocation, coordsOrigin!,'red','RouteOrigin');
-    this.mapService.getRouteBetweenPoints(coordsOrigin, coordsDestination,'green','RouteDestination');
+    this.mapService.getRouteBetweenPoints(currentLocation, coordsOrigin!,'blue','RouteOrigin');
+    this.mapService.getRouteBetweenPoints(coordsOrigin, coordsDestination,'red','RouteDestination');
   }
 
   searchStation(nombreEstacion:string){
-     const station=  this.placesServices.stations.find(station => station.nombreEstacion.toLowerCase() === nombreEstacion.toLowerCase());
+     const station=  this.placesServices.stations.find(station => station.stationName.toLowerCase() === nombreEstacion.toLowerCase());
      return station;
   }
 
