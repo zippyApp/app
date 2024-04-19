@@ -4,6 +4,7 @@ import {Map, Popup, Marker, NavigationControl, GeolocateControl} from 'mapbox-gl
 import { MapService } from 'src/app/services/map.service';
 import { PlacesService } from 'src/app/services/places.service';
 
+
 @Component({
   selector: 'app-map-view',
   templateUrl: './map-view.component.html',
@@ -16,10 +17,7 @@ export class MapViewComponent  implements AfterViewInit {
   private mapService:MapService = inject(MapService);
 
   @ViewChild('mapDiv') mapElement?: ElementRef;
-
-
-  constructor() {
-       }
+  constructor() { }
 
   ngAfterViewInit(): void {
 
@@ -32,8 +30,7 @@ export class MapViewComponent  implements AfterViewInit {
       zoom: 9, // starting zoom
     });
 
-    const popup = new Popup({closeOnMove:true})
-      .setHTML(
+    const popup = new Popup({closeOnMove:true}).setHTML(
         `
         <div style="color:black; text-align:center">
         <h6 style="margin-top:0; margin-bottom:0;">Aquí estoy</h6>

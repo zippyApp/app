@@ -12,9 +12,9 @@ import { locateOutline } from 'ionicons/icons';
 })
 export class BtnMyLocationComponent  implements OnInit {
 
-  constructor() {
+  constructor() { 
     addIcons({ locateOutline});
-   }
+  }
 
   ngOnInit() {}
 

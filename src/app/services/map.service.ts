@@ -1,6 +1,6 @@
 import { Injectable, WritableSignal, inject, signal } from '@angular/core';
 import { AnySourceData, LngLatBounds, LngLatLike, Map, Marker, Popup } from 'mapbox-gl';
-import { DirectionsApiClient } from '../api/directionsApiClient';
+import { DirectionsApiClient } from '../services/api/directionsApiClient';
 import { DirectionsResponse, Route } from '../interfaces/directions';
 import { Stage, Station } from '../interfaces/station';
 import { ActionSheetController } from '@ionic/angular';

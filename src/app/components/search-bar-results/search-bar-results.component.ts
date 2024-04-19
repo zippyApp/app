@@ -1,6 +1,8 @@
 import { HttpClientModule } from '@angular/common/http';
 import { Component, EventEmitter, Input, OnInit, Output, inject } from '@angular/core';
+import { IonHeader, IonToolbar, IonTitle, IonButton,  IonIcon } from '@ionic/angular/standalone';
 import { IonicModule } from '@ionic/angular';
+import { CommonModule } from '@angular/common';
 import { Station } from 'src/app/interfaces/station';
 import { MapService } from 'src/app/services/map.service';
 import { PlacesService } from 'src/app/services/places.service';
@@ -10,10 +12,13 @@ import { PlacesService } from 'src/app/services/places.service';
   templateUrl: './search-bar-results.component.html',
   styleUrls: ['./search-bar-results.component.scss'],
   standalone: true,
-  imports: [IonicModule,HttpClientModule],
+  imports: [IonicModule,HttpClientModule,IonHeader, IonToolbar, IonTitle, IonButton,  IonIcon, CommonModule],
   providers:[HttpClientModule]
 })
 export class SearchBarResultsComponent  implements OnInit {
+
+  @Input() isModal: boolean = false;
+  
   @Output() selected:EventEmitter<boolean> = new EventEmitter<boolean>();
 
     private mapService:MapService = inject(MapService);

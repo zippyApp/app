@@ -4,7 +4,7 @@
 /** Ionic CSS Variables **/
 :root {
   /** primary **/
-  --ion-color-primary: #3880ff;
+  --ion-color-primary: #01192f; 
   --ion-color-primary-rgb: 56, 128, 255;
   --ion-color-primary-contrast: #ffffff;
   --ion-color-primary-contrast-rgb: 255, 255, 255;
@@ -12,7 +12,7 @@
   --ion-color-primary-tint: #4c8dff;
 
   /** secondary **/
-  --ion-color-secondary: #3dc2ff;
+  --ion-color-secondary: #e0e719;
   --ion-color-secondary-rgb: 61, 194, 255;
   --ion-color-secondary-contrast: #ffffff;
   --ion-color-secondary-contrast-rgb: 255, 255, 255;
@@ -76,11 +76,8 @@
   --ion-color-light-tint: #f5f6f9;
 }
 
-@media (prefers-color-scheme: dark) {
-  /*
-   * Dark Colors
-   * -------------------------------------------
-   */
+ /*
+   @media (prefers-color-scheme: dark) {
 
   body {
     --ion-color-primary: #428cff;
@@ -150,7 +147,7 @@
   /*
    * iOS Dark Theme
    * -------------------------------------------
-   */
+   
 
   .ios body {
     --ion-background-color: #000000;
@@ -191,10 +188,10 @@
   }
 
 
-  /*
+  
    * Material Design Dark Theme
    * -------------------------------------------
-   */
+   
 
   .md body {
     --ion-background-color: #121212;
@@ -234,6 +231,9 @@
     --ion-card-background: #1e1e1e;
   }
 }
+   */
+
+
 
 html {
   /* 

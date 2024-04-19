@@ -1,0 +1,200 @@
+
+<ion-content [fullscreen]="true">
+  <app-header title='Zippy'></app-header> 
+
+  @if(!isUserLocationReady){
+    <app-loading>
+    </app-loading>
+  }@else {
+
+    @if(stage === 6){
+      <ion-fab slot="fixed" vertical="top" horizontal="center" [edge]="true">
+        <div class="trip-container small">
+          <ion-grid>
+            <ion-row>
+                <p> Distancia Origen:
+                  <strong class="red">{{originDistance}} kms</strong>
+                </p>
+                <p>
+                   Duración origen
+                  <strong class="green">{{originDuration}} min</strong>
+                </p>
+            </ion-row>
+            <ion-row>
+                <p> Distancia Destino:
+                  <strong class="red">{{destinationDistance}} kms</strong>
+                </p>
+                <p>
+                   Duración destino
+                  <strong class="green">{{destinationDuration}} min</strong>
+                </p>
+
+            </ion-row>
+          </ion-grid>
+
+        </div>
+      </ion-fab>
+
+    }
+    <!--NO DESCOMENTAR-->
+    <app-map-view>
+    </app-map-view>
+
+    <!-- <app-zippy-logo></app-zippy-logo> -->
+      <!-- <ion-fab  slot="fixed" vertical="bottom" horizontal="start">
+        <ion-fab-button (click)="goToMyLocation()" >
+          <ion-icon name="locate-outline"></ion-icon>
+        </ion-fab-button>
+      </ion-fab> -->
+
+      @switch (stage) {
+        @case (0) {
+          <!--<ion-fab slot="fixed" vertical="top" horizontal="center">
+            <div class="trip-container">
+              <ion-row>
+                <h6 class="text-center">¿A donde vamos?</h6>
+              </ion-row>
+              <ion-row>
+                <p class="text-center">
+                  Selecciona una estación o buscala abajo
+                </p>
+              </ion-row>
+            </div>
+          </ion-fab>-->
+        }
+        @case (1) {
+          <ion-fab slot="fixed" vertical="top" horizontal="center">
+            <div class="trip-container">
+              <ion-row class="text-center">
+                <h6>Confirma tu estación de origen</h6>
+              </ion-row>
+            </div>
+          </ion-fab>
+        }
+        @case (2) {
+          <ion-fab slot="fixed" vertical="top" horizontal="center">
+            <div class="trip-container">
+              <ion-grid>
+                <ion-row class="d-flex" >
+                  <ion-col>
+                    <p>Origen:</p>
+                  </ion-col>
+                  <ion-col>
+                    <strong>{{originStation}}</strong>
+                  </ion-col>
+                  <ion-col>
+                    <ion-button  (click)="changeStage(4)" class="button">
+                      Cambiar
+                    </ion-button>
+                  </ion-col>
+                </ion-row>
+                <ion-row class="d-flex">
+                  <ion-col>
+                    <p>
+                      Destino:
+                    </p>
+                  </ion-col>
+                  <ion-col>
+                    <strong>{{destinationStation}}</strong>
+                  </ion-col>
+                  <ion-col>
+                    <ion-button  (click)="changeStage(3)" class="button">
+                      Cambiar
+                    </ion-button>
+                  </ion-col>
+                </ion-row>
+
+              </ion-grid>
+              <ion-row class="d-flex">
+                <ion-fab-button (click)="swapStations()" size="small" class="text-center"><ion-icon name="swap-vertical-outline"></ion-icon></ion-fab-button>
+              </ion-row>
+            </div>
+
+          </ion-fab>
+        }
+        @case (3) {
+          <ion-fab slot="fixed" vertical="top" horizontal="center">
+            <div class="trip-container">
+              <ion-row class="text-center">
+                <h6>Confirma tu estación de destino</h6>
+              </ion-row>
+            </div>
+          </ion-fab>
+        }
+        @case (4) {
+          <ion-fab slot="fixed" vertical="top" horizontal="center">
+            <div class="trip-container">
+              <ion-row>
+                <h6 class="text-center">Confirma tu estación de origen</h6>
+              </ion-row>
+            </div>
+          </ion-fab>
+
+        }
+      }
+
+
+      @if((stage === 0 || stage ===1 || stage === 3 || stage === 4)){
+
+        <ion-fab slot="fixed" horizontal="center" vertical="bottom">
+          <ion-fab-button id="open-modal" class="station-button">
+            <ion-icon name="bicycle"></ion-icon>
+            Buscar estación
+          </ion-fab-button> 
+        </ion-fab>
+      }
+
+      @if(stage === 2){
+        <ion-fab slot="fixed" horizontal="center" vertical="bottom">
+          <ion-fab-button (click)="confirmTrip()"class="station-button">
+            <ion-icon name="checkmark-outline"></ion-icon>
+            Vamos!
+          </ion-fab-button>
+        </ion-fab>
+      }
+      @if (stage ===5) {
+        <ion-fab slot="fixed" horizontal="center" vertical="bottom">
+          <div class="trip-container">
+            <ion-grid>
+              <ion-row>
+                <h6 class="text-center">
+                  ¿Cuando quieres abordar?
+                </h6>
+              </ion-row>
+              <ion-row>
+                <ion-col>
+                  <ion-fab-button (click)="startTrip()" class="confirm-button">Ahora mismo</ion-fab-button>
+                </ion-col>
+                <ion-col>
+                  <ion-fab-button (click)="otherMoment()" class="confirm-button">En otro momento</ion-fab-button>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+          </div>
+        </ion-fab>
+      }
+
+    <ion-modal
+    #modal
+    trigger="open-modal"
+    [initialBreakpoint]="0.25"
+    [breakpoints]="[0,0.25,0.5, 0.75, 1]"
+    [backdropDismiss]="true"
+    [animated]="true"
+    [canDismiss]="true"
+    [backdropBreakpoint]="0.5"
+  > 
+    <ng-template>
+      <ion-content class="ion-padding">
+        <app-search-bar-results (selected)="closeModal($event)">
+
+        </app-search-bar-results>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
+
+  }
+
+</ion-content>
+
+
