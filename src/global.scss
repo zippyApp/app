@@ -39,8 +39,13 @@ ion-button {
 
 .submit {
     margin-top: 40px;
+    //transition: color 0.3s;
 }
 
+.submit:hover{
+    color: #01192f; 
+  }
+  
 .empty {
     text-align: center;
     padding: 60px;

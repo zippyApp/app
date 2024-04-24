@@ -15,7 +15,7 @@ import { CustomInputComponent } from '../../components/custom-input/custom-input
     ReactiveFormsModule,
     IonContent,
     IonHeader,
-    IonTitle,
+    IonTitle, 
     IonToolbar,
     IonButton,
     IonIcon,
@@ -26,10 +26,12 @@ export class SignUpPage implements OnInit {
   form: FormGroup = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.email]),
     password: new FormControl('', [Validators.required]),
-    name: new FormControl('', [Validators.required, Validators.minLength(4)]),
-    docType: new FormControl('', [Validators.required]),
+    first_names: new FormControl('', [Validators.required, Validators.minLength(4)]),
+    last_names: new FormControl('', [Validators.required, Validators.minLength(4)]),
+    document_type: new FormControl('', [Validators.required]),
     document: new FormControl('', [Validators.required, Validators.pattern('^[0-9]{8,10}$')]),
-    phone: new FormControl('', [Validators.required, Validators.pattern('^[0-9]{10}$')])
+    occupation: new FormControl('', [Validators.required, Validators.minLength(4)]),
+    phone_number: new FormControl('', [Validators.required, Validators.pattern('^[0-9]{10}$')])
   });
 
   constructor() { }

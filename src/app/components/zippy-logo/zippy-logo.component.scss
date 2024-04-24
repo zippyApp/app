@@ -1,12 +1,16 @@
+User
 .login-container {
   position: relative;
   min-height: 100vh;
   padding: 20px;
+  border-radius: 50%;
 }
 
-app-zippy-logo {
-  position: absolute;
-  top: 10px; /* Ajusta según necesidad */
+app-zippy-logo, img { 
+  position: static;
+  top: 50%; 
   left: 50%;
-  transform: translateX(-50%); /* Centra horizontalmente el logo */
+  //transform: translateX(-50%); 
+  border-radius: 50%;
+  width: 100px;
 }

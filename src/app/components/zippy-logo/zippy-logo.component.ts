@@ -9,7 +9,7 @@ import { Component, OnInit } from '@angular/core';
 export class ZippyLogoComponent  implements OnInit {
 
   constructor() { }
-
+ 
   ngOnInit() {}
 
 }
