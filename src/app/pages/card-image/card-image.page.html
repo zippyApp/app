@@ -1,0 +1,30 @@
+<app-header title='Registro'></app-header>
+
+<ion-content>
+  <div class="d-flex-center">
+  <form #imageForm="ngForm" class="ion-padding">
+    <div class="d-flex-center">
+      <div class="image-container">
+        <div>
+          <h3>Cara frontal de tu documento</h3>
+        </div>
+        <div class="image-box" (click)="cardImage('frontal')">
+          <ion-icon name="card-outline" *ngIf="!frontImage"></ion-icon>
+          <img *ngIf="frontImage" [src]="frontImage" />
+        </div>
+        <div>
+          <h3>Cara posterior de tu documento</h3>
+        </div>
+        <div class="image-box" (click)="cardImage('posterior')">
+          <ion-icon name="card-outline" *ngIf="!backImage" ></ion-icon>
+          <img *ngIf="backImage" [src]="backImage" />
+        </div>      
+      </div>   
+      <ion-button expand="block" mode="ios" class="submit" routerLink="/reference" #submitButton  (click)="clickButton($event)">
+        Continuar
+        <ion-icon slot="end" name="arrow-forward-outline"></ion-icon>
+      </ion-button>
+    </div>
+  </form>
+</div>
+</ion-content>
