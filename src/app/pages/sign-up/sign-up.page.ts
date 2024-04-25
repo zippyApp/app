@@ -4,7 +4,7 @@ import { ReactiveFormsModule, FormGroup, FormControl, Validators } from '@angula
 import { IonContent, IonHeader, IonTitle, IonToolbar, IonButton, IonIcon, IonItem, IonList, IonSelect, IonSelectOption} from '@ionic/angular/standalone';
 import { HeaderComponent } from '../../components/header/header.component';
 import { CustomInputComponent } from '../../components/custom-input/custom-input.component';
-
+import { RouterLink } from '@angular/router';
 @Component({
   selector: 'app-sign-up',
   templateUrl: './sign-up.page.html',
@@ -19,6 +19,7 @@ import { CustomInputComponent } from '../../components/custom-input/custom-input
     IonToolbar,
     IonButton,
     IonIcon,
+    RouterLink,
     CustomInputComponent, HeaderComponent, IonItem, IonList, IonSelect, IonSelectOption
   ]
 })

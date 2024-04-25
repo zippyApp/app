@@ -26,4 +26,8 @@ export const routes: Routes = [
     path: 'reference',
     loadComponent: () => import('./pages/reference/reference.page').then( m => m.ReferencePage)
   },
+  {
+    path: 'card-image',
+    loadComponent: () => import('./pages/card-image/card-image.page').then( m => m.CardImagePage)
+  },
 ];

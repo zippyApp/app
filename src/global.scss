@@ -32,7 +32,7 @@ ion-button {
 }
 
 // safe padding for ios
-.safe-p-bottom{
+.safe-p-bottom {
     padding-bottom: constant(safe-area-inset-bottom); // for ios 13+
     padding-bottom: env(safe-area-inset-bottom); // for previous ios versions
 }
@@ -42,10 +42,14 @@ ion-button {
     //transition: color 0.3s;
 }
 
-.submit:hover{
-    color: #01192f; 
-  }
-  
+.submit:hover {
+    color: #01192f;
+}
+
+.submit:focus {
+    color: inherit;
+}
+
 .empty {
     text-align: center;
     padding: 60px;
