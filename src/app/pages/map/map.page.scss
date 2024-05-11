@@ -6,56 +6,108 @@ ion-fab-button {
     --color: white;
   }
   ion-fab-button.station-button{
-    width: 200px;
-    --background: #e0e719;
-    --background-activated: #e0e719;
-    --background-hover: #edd988;
+    width: 350px;
+    // --background: #e0e719;
+    // --background-activated: #e0e719;
+    // --background-hover: #edd988;
     --border-radius: 15px;
     --box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.3), 0px 1px 3px 1px rgba(0, 0, 0, 0.15);
-    --color: black;
+    // --color: black;
   }
-  
+
   ion-fab-button.confirm-button{
     width: 120px;
     --background: #01192f;
-    --background-activated: #fadf56;
-    --background-hover: #edd988;
     --border-radius: 15px;
     --box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.3), 0px 1px 3px 1px rgba(0, 0, 0, 0.15);
-    --color: black;
   }
-  
-  
+
+  .confirm-vehicle{
+    display: flex;
+    margin-top: 10px;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    ion-button{
+      width: 200px;
+    }
+  }
+
+  .modal{
+    top:10px
+  }
+
   .trip-container{
     padding: 10px;
+    width: 350px;
     border-radius: 10px;
     background-color: white;
     box-shadow: 0px 10px 0px rgba(0,0,0,0.2);
-    color:black
+    color:black;
+    margin-bottom: 20px;
   }
-  
+  .resume{
+    margin-top: 10px;
+  }
+
+  #resume{
+    padding: 0px;
+    padding-top: 10px;
+  }
+
   .text-center{
     margin: 0 auto;
     text-align: center;
   }
-  
+
   .d-flex{
     display: flex;
     align-items: center;
-  
+
+
+  }
+  .d-flex-center{
+    display: flex;
+    justify-content: center;
+  }
+
+  .d-flex-end{
+    display: flex;
+    justify-content: flex-end;
+
   }
   .button{
     flex-direction: row-reverse;
     }
-  
+
   .origin{
     color:red;
   }
   .destination{
     color:green;
   }
-  
-  
+
+
+  ion-row{
+    margin-bottom: 10px;
+  }
+
+
+  .timer-container{
+    flex-direction: column;
+    width: 100px;
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    height: 100px;
+    background-color: aliceblue;
+    border-radius: 100%;
+  }
+
+  p{
+    margin: 0px 0px 0px 0px;
+  }
+
   @media (max-width: 300px) {
     .trip-container{
       padding: 5px;
@@ -78,4 +130,3 @@ ion-fab-button {
       font-size: 12px;
     }
   }
-  

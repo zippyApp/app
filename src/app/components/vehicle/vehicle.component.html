@@ -1,0 +1,49 @@
+
+  <ion-accordion  [style]="{'--color-accordion':selected?'white':'black'}"  [class.ion-accordion]="selected" [value]="value">
+    <ion-item slot="header"  [color]="'xd'">
+      <ion-row  class="ion-align-items-center wrapper" >
+        <ion-col>
+          <ion-img [class.ion-img-selected]="selected" [src]=" 'assets/vehicles-images/'+ nombreImagen +'.png'" alt=""></ion-img>
+        </ion-col>
+        <ion-col>
+          <p [class.color-white]="selected" class="align-center">{{value}}</p>
+        </ion-col>
+        <ion-col>
+          <div [class.color-white]="selected" class="d-flex">
+            $800 <br/>
+            Tarifa <br/>
+            Efectivo <br/>
+          </div>
+
+        </ion-col>
+      </ion-row>
+
+    </ion-item>
+    <div class="ion-padding" slot="content">
+      <ion-grid>
+        <ion-row ion-justify-content-around>
+          <ion-col size="10">
+            <p>
+              {{ tipoViaje === 'INSTANTANEO'? 'Entregar antes de:':'Recoger antes de'}}
+            </p>
+          </ion-col>
+            <ion-col class="align-center">
+              <span class="material-symbols-outlined">
+                battery_4_bar
+                </span>
+            </ion-col>
+        </ion-row>
+
+        <ion-row>
+          <ion-col  size="10">
+            <p>
+              Tiempo estimado:
+            </p>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </div>
+  </ion-accordion>
+
+
+

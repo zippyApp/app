@@ -23,7 +23,11 @@ export enum Stage{
   'CAMBIO_DESTINO',
   'CAMBIO_ORIGEN',
   'CONFIRMANDO',
+  'SELECCION-VEHICULO',
+  'CONDICIONES',
   'CONFIRMADO',
   'LLEGADA-ORIGEN' ,
+  'AUTORIZACION-EMPLEADO',
   'LLEGADA-DESTINO' }
 
+// Path: src/app/interfaces/user.ts

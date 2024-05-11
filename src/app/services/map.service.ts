@@ -4,6 +4,8 @@ import { DirectionsApiClient } from '../services/api/directionsApiClient';
 import { DirectionsResponse, Route } from '../interfaces/directions';
 import { Stage, Station } from '../interfaces/station';
 import { ActionSheetController } from '@ionic/angular';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { PlacesService } from './places.service';
 
 @Injectable({
   providedIn: 'root'
@@ -12,13 +14,16 @@ export class MapService {
 
   private directionsApi:DirectionsApiClient = inject(DirectionsApiClient);
   private actionSheetCtrl: ActionSheetController = inject(ActionSheetController);
-  stage:Stage = Stage.DESTINO;
 
-  originStation?:string;
-  destinationStation?:string;
+  stage:Stage = Stage.CONFIRMANDO;
+
+  originStation?:string | null;
+  destinationStation?:string | null;
 
   private map?:Map;
   private markers:Marker[] = [];
+
+   stageObservable: BehaviorSubject<Stage> = new BehaviorSubject<Stage>(this.stage);
 
 
   originDistance?:number;
@@ -35,7 +40,20 @@ export class MapService {
     this.map = map;
   }
 
+  setFitBounds(padding:number, currenLocation :[number,number]){
+    if(this.map === undefined) throw new Error('No hay mapa');
+
+    const bounds = new LngLatBounds();
+    this.markers.forEach(marker => bounds.extend(marker.getLngLat()));
+    bounds.extend(currenLocation);
+
+    this.map.fitBounds(bounds,{
+      padding:padding
+    })
+  }
+
   setStage(stage:Stage){
+    this.stageObservable.next(stage);
     this.stage = stage;
   }
   setOriginStation(station:string){
@@ -59,9 +77,9 @@ export class MapService {
 
     this.markers.forEach(marker => marker.remove());
     const newMarkers:any[] = [];
-    
+
     if (stations.length === 0) return;
-    
+
     stations.forEach(station => {
 
       const coords = [station.longitude, station.latitude] as [number, number];
@@ -81,17 +99,20 @@ export class MapService {
               this.setStage(Stage.ORIGEN);
             }
             else if(this.stage === Stage.ORIGEN){
-              if(this.destinationStation === station.stationName) return;
               this.originStation = station.stationName;
               this.setStage(Stage.CONFIRMACION);
             }
             else if(this.stage === Stage.CAMBIO_DESTINO){
-              if(this.originStation === station.stationName) return;
+              if(this.originStation === station.stationName) {
+                this.originStation = null;
+              };
               this.destinationStation = station.stationName;
               this.setStage(Stage.CONFIRMACION);
             }
             else if(this.stage === Stage.CAMBIO_ORIGEN){
-              if(this.destinationStation === station.stationName) return;
+              if(this.destinationStation === station.stationName) {
+                this.destinationStation = null;
+              };
               this.originStation = station.stationName;
               this.setStage(Stage.CONFIRMACION);
             }
@@ -113,19 +134,24 @@ export class MapService {
     bounds.extend(currentLocation);
 
     this.map.fitBounds(bounds,{
-      padding:50
+      padding:{
+        top: 200,
+        bottom: 200,
+        left: 120,
+        right: 120
+      }
+
     })
   }
 
-  getRouteBetweenPoints(start:[number, number], end:[number,number], color:string, routeName:string){
+  getRouteBetweenPoints(start:[number, number], end:[number,number], color:string, routeName:string, currentLocation:[number,number]){
     const typeOfVehicle = routeName === 'RouteOrigin' ? 'walking' : 'cycling';
-    console.log(routeName, '/' + typeOfVehicle + `/${start.join(',')};${end.join(',')}`)
     this.directionsApi.get<DirectionsResponse>('/'+typeOfVehicle +`/${start.join(',')};${end.join(',')}`)
-      .subscribe(resp => this.drawPolyline(resp.routes[0],color,routeName));
+      .subscribe(resp => this.drawPolyline(resp.routes[0],color,routeName, currentLocation));
 
   }
 
-  private drawPolyline(route:Route, color:string, routeName:string){
+  private drawPolyline(route:Route, color:string, routeName:string, currentLocation:[number,number]){
 
     let distance = (Math.round((route.distance / 10)) / 100);
     let duration = Math.floor(route.duration / 60);
@@ -140,21 +166,24 @@ export class MapService {
     if(!this.map) throw Error('No hay mapa inicializado');
     const coords = route.geometry.coordinates;
     var newBounds = new LngLatBounds();
-    
+
     coords.forEach(([lng, lat]) => {
       newBounds.extend([lng, lat]);
     });
-    
-    //Para que los bounds incluyan tanto la ruta de la ubicacion al origen como la del origen al destino 
-    if (routeName !== 'RouteOrigin') {
-      var currentBounds = this.map.getBounds()
-      currentBounds.extend(newBounds)
-      newBounds=currentBounds
-    }
-    this.map.fitBounds(newBounds,{
-      padding:50
-    })
-    
+
+    newBounds.extend(currentLocation!);
+
+    //Para que los bounds incluyan tanto la ruta de la ubicacion al origen como la del origen al destino
+
+    this.map?.fitBounds( newBounds, {
+      padding: {
+        top: 200,
+        bottom: 120,
+        left: 120,
+        right: 120
+      }
+    });
+
 
     const RouteData:AnySourceData={
       type: 'geojson',
@@ -245,7 +274,7 @@ export class MapService {
           });
         }
       }
-    }); 
+    });
   }
 
   async confirmStation(station:Station){

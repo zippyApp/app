@@ -13,28 +13,40 @@ import {
   bicycle,
   swapVerticalOutline,
   checkmarkOutline,
+  chevronForwardCircle,
+  returnUpBackOutline,
 } from 'ionicons/icons'
 import { HeaderComponent } from '../../components/header/header.component';
 import { MapService } from 'src/app/services/map.service';
 import { SearchBarResultsComponent } from 'src/app/components/search-bar-results/search-bar-results.component';
 import { HttpClientModule } from '@angular/common/http';
 import { Stage, Station } from 'src/app/interfaces/station';
+import { VehicleListComponent } from 'src/app/components/vehicle-list/vehicle-list.component';
 
 @Component({
   selector: 'app-map',
   templateUrl: './map.page.html',
   styleUrls: ['./map.page.scss'],
   standalone: true,
-  imports: [IonicModule, CommonModule, FormsModule, LoadingComponent, MapViewComponent, ZippyLogoComponent, SearchBarResultsComponent, HttpClientModule, HeaderComponent],
+  imports: [IonicModule, CommonModule, FormsModule, LoadingComponent, MapViewComponent, ZippyLogoComponent, SearchBarResultsComponent, HttpClientModule, HeaderComponent, VehicleListComponent],
   providers: [HttpClientModule]
 })
 export class MapPage {
   @ViewChild('modal') modal?: IonModal;
+  @ViewChild('modaSelVeh') modaSelVeh?: IonModal;
+  @ViewChild('modalCond') modalCond?: IonModal;
+  @ViewChild('modalItin') modalItin?: IonModal;
+
+
+  public vehicles =['bike', 'e-bike', 'scooter'];
+
+  public tipoViaje!: 'INSTANTANEO' | 'RESERVADO';
 
   private placesServices: PlacesService = inject(PlacesService);
   private mapService: MapService = inject(MapService);
   private formBuilder: FormBuilder = inject(FormBuilder);
 
+  selectedVehicle?: string | string[]  | null;
 
   get stage() {
     return this.mapService.stage;
@@ -69,7 +81,7 @@ export class MapPage {
 
 
   constructor() {
-    addIcons({ locateOutline, bicycle, swapVerticalOutline, checkmarkOutline });
+    addIcons({ locateOutline, bicycle, swapVerticalOutline, checkmarkOutline, chevronForwardCircle, returnUpBackOutline});
   }
 
   async ngOnInit() {
@@ -78,6 +90,14 @@ export class MapPage {
     })
     await this.placesServices.printCurrentPosition();
     this.placesServices.getStations()
+    this.mapService.stageObservable.subscribe(
+      (stage:Stage) => {
+        if (stage === Stage.CONFIRMACION) {
+          this.startTrip();
+          // this.mapService.setFitBounds(200,this.placesServices.userLocation! );
+        }
+      }
+    );
 
 
   }
@@ -85,8 +105,25 @@ export class MapPage {
   }
 
   changeStage(stage: Stage) {
-    this.modal?.present();
+    if(stage === Stage.CAMBIO_DESTINO || stage === Stage.CAMBIO_ORIGEN){
+      this.modal?.present();
+    }
     this.mapService.setStage(stage);
+    if(stage === Stage['SELECCION-VEHICULO']){{
+      this.modaSelVeh?.dismiss();
+      this.modalCond?.dismiss();
+    }}
+  }
+
+  confirmInstantTrip() {
+    this.changeStage(6);
+    this.tipoViaje = 'INSTANTANEO';
+
+  }
+
+  confirmReservedTrip() {
+    this.changeStage(6);
+    this.tipoViaje = 'RESERVADO';
   }
 
 
@@ -111,26 +148,23 @@ export class MapPage {
     if (this.originStation == null || this.destinationStation == null) return;
     this.mapService.setDestinationStation(this.originStation!);
     this.mapService.setOriginStation(aux!);
+    this.startTrip();
 
   }
 
-  confirmTrip() {
-    this.mapService.setStage(Stage.CONFIRMANDO);
-  }
   startTrip() {
     if (this.originStation == null || this.destinationStation == null) return;
     if (!this.placesServices.userLocation) throw Error('No hay ubicación del usuario');
 
 
-    this.mapService.setStage(Stage.CONFIRMADO)
     const originStation = this.searchStation(this.originStation!);
     const coordsOrigin = [originStation?.longitude, originStation?.latitude] as [number, number];
     const destinationStation = this.searchStation(this.destinationStation!);
     const coordsDestination = [destinationStation?.longitude, destinationStation?.latitude] as [number, number];
     const currentLocation = this.placesServices.userLocation!;
 
-    this.mapService.getRouteBetweenPoints(currentLocation, coordsOrigin!, 'blue', 'RouteOrigin');
-    this.mapService.getRouteBetweenPoints(coordsOrigin, coordsDestination, 'red', 'RouteDestination');
+    this.mapService.getRouteBetweenPoints(currentLocation, coordsOrigin!, 'blue', 'RouteOrigin', this.placesServices.userLocation);
+    this.mapService.getRouteBetweenPoints(coordsOrigin, coordsDestination, 'red', 'RouteDestination', this.placesServices.userLocation);
   }
 
   searchStation(nombreEstacion: string) {
@@ -138,9 +172,16 @@ export class MapPage {
     return station;
   }
 
+  selectVehicle(vehicle:string | string[] | null){
+    this.selectedVehicle = vehicle;
 
-  otherMoment() {
-    this.mapService.setStage(Stage.CONFIRMACION);
+
   }
+
+  openItin(){
+    this.modalItin?.present();
+
+  }
+
 
 }

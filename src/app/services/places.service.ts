@@ -37,7 +37,7 @@ export class PlacesService {
     // if ( !this.userLocation ) throw Error('No hay userLocation');
 
     this.isLoadingStations = true;
-    return this.http.get<Station[]>(environment.backStations + 'getStationsMap/all', {
+    return this.http.get<Station[]>(environment.backStations + '/all', {
       headers: new HttpHeaders().set("Access-Control-Allow-Origin", "*")
     })
       .subscribe(

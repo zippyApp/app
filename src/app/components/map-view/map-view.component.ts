@@ -49,6 +49,10 @@ export class MapViewComponent  implements AfterViewInit {
       new GeolocateControl({
           positionOptions: {
               enableHighAccuracy: true
+              
+          },
+          fitBoundsOptions:{
+            maxZoom: 18
           },
           // When active the map will receive updates to the device's location as it changes.
           trackUserLocation: true,

@@ -5,7 +5,7 @@
 export const environment = {
   production: false,
   apiKey: 'pk.eyJ1Ijoic2Vic3RpaWFuIiwiYSI6ImNsdTl5eGV0NzBlaGsycXBubDlrd2xoZjIifQ.3cUWTjnCSnAmVUW--A9NDA',
-  backStations: 'http://localhost:8080/api/estaciones/',
+  backStations: 'http://localhost:8080/api/v1/stations',
 };
 
 /*

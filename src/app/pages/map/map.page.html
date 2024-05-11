@@ -1,189 +1,288 @@
-
+<ion-header>
+  <ion-toolbar>
+    <app-header title="Zippy"></app-header>
+  </ion-toolbar>
+</ion-header>
 <ion-content [fullscreen]="true">
-  <app-header title='Zippy'></app-header> 
 
   @if(!isUserLocationReady){
-    <app-loading>
-    </app-loading>
+  <app-loading>
+  </app-loading>
   }@else {
 
-    @if(stage === 6){
-      <ion-fab slot="fixed" vertical="top" horizontal="center" [edge]="true">
-        <div class="trip-container small">
-          <ion-grid>
-            <ion-row>
-                <p> Distancia Origen:
-                  <strong class="red">{{originDistance}} kms</strong>
-                </p>
-                <p>
-                   Duración origen
-                  <strong class="green">{{originDuration}} min</strong>
-                </p>
-            </ion-row>
-            <ion-row>
-                <p> Distancia Destino:
-                  <strong class="red">{{destinationDistance}} kms</strong>
-                </p>
-                <p>
-                   Duración destino
-                  <strong class="green">{{destinationDuration}} min</strong>
-                </p>
+  <!--NO DESCOMENTAR-->
+  <!-- <app-map-view>
+    </app-map-view> -->
 
-            </ion-row>
-          </ion-grid>
 
-        </div>
-      </ion-fab>
+  @if(stage >= 8)
+  {
+  <ion-fab  (click)="openItin()"  slot="fixed" vertical="top" horizontal="start">
+    <div id="open-itin" class="timer-container">
+      <small>Tiempo restante</small>
+      <p>4:00</p>
+    </div>
+    <!-- <ion-fab-button id="open-itin" class="timer-container">
+      <small>Tiempo restante</small>
+      <p>4:00</p>
+    </ion-fab-button> -->
+  </ion-fab>
 
-    }
-    <!--NO DESCOMENTAR-->
-    <app-map-view>
-    </app-map-view>
+  <ion-fab slot="fixed" vertical="top" horizontal="end">
+    <ion-fab-button id="open-can" color="danger">
+      <ion-icon  name="close-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+  }
 
-    <!-- <app-zippy-logo></app-zippy-logo> -->
-      <!-- <ion-fab  slot="fixed" vertical="bottom" horizontal="start">
+
+  <ion-fab slot="fixed" vertical="center" horizontal="start">
+    <ion-fab-button>
+      <ion-icon name="return-up-back-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
+
+  <!-- <app-zippy-logo></app-zippy-logo> -->
+  <!-- <ion-fab  slot="fixed" vertical="bottom" horizontal="start">
         <ion-fab-button (click)="goToMyLocation()" >
           <ion-icon name="locate-outline"></ion-icon>
         </ion-fab-button>
       </ion-fab> -->
+  @switch (stage) {
+  @case (0) {
+  <ion-fab class="modal" slot="fixed" vertical="top" horizontal="center">
+    <div class="trip-container">
+      <ion-row>
+        <h6 class="text-center">¿A donde vamos?</h6>
+      </ion-row>
+      <ion-row>
+        <p class="text-center">
+          Selecciona una estación o buscala abajo
+        </p>
+      </ion-row>
+    </div>
+  </ion-fab>
+  }
+  @case (1) {
+  <ion-fab slot="fixed" vertical="top" horizontal="center">
+    <div class="trip-container">
+      <ion-row>
+        <h6 class="text-center">Confirma tu estación de origen</h6>
+      </ion-row>
+    </div>
+  </ion-fab>
+  }
+  @case (2) {
+  <ion-fab slot="fixed" vertical="top" horizontal="center">
+    <ion-accordion-group id="resume" class="trip-container">
 
-      @switch (stage) {
-        @case (0) {
-          <!--<ion-fab slot="fixed" vertical="top" horizontal="center">
-            <div class="trip-container">
-              <ion-row>
-                <h6 class="text-center">¿A donde vamos?</h6>
-              </ion-row>
-              <ion-row>
-                <p class="text-center">
-                  Selecciona una estación o buscala abajo
+      <ion-accordion value="first">
+        <ion-item slot="header" color="light">
+          <ion-label>Estaciones</ion-label>
+        </ion-item>
+        <div class="ion-padding" slot="content">
+          <ion-grid>
+            <ion-row class="d-flex">
+              <ion-col size="3">
+                <p>Origen:</p>
+              </ion-col>
+              <ion-col>
+                <strong>{{originStation}}</strong>
+              </ion-col>
+              <ion-col>
+                <ion-button (click)="changeStage(4)" class="button">
+                  Cambiar
+                </ion-button>
+              </ion-col>
+            </ion-row>
+            <ion-row class="d-flex">
+              <ion-col size="3">
+                <p>
+                  Destino:
                 </p>
-              </ion-row>
-            </div>
-          </ion-fab>-->
-        }
-        @case (1) {
-          <ion-fab slot="fixed" vertical="top" horizontal="center">
-            <div class="trip-container">
-              <ion-row class="text-center">
-                <h6>Confirma tu estación de origen</h6>
-              </ion-row>
-            </div>
-          </ion-fab>
-        }
-        @case (2) {
-          <ion-fab slot="fixed" vertical="top" horizontal="center">
-            <div class="trip-container">
-              <ion-grid>
-                <ion-row class="d-flex" >
-                  <ion-col>
-                    <p>Origen:</p>
-                  </ion-col>
-                  <ion-col>
-                    <strong>{{originStation}}</strong>
-                  </ion-col>
-                  <ion-col>
-                    <ion-button  (click)="changeStage(4)" class="button">
-                      Cambiar
-                    </ion-button>
-                  </ion-col>
-                </ion-row>
-                <ion-row class="d-flex">
-                  <ion-col>
-                    <p>
-                      Destino:
-                    </p>
-                  </ion-col>
-                  <ion-col>
-                    <strong>{{destinationStation}}</strong>
-                  </ion-col>
-                  <ion-col>
-                    <ion-button  (click)="changeStage(3)" class="button">
-                      Cambiar
-                    </ion-button>
-                  </ion-col>
-                </ion-row>
+              </ion-col>
+              <ion-col>
+                <strong>{{destinationStation}}</strong>
+              </ion-col>
+              <ion-col>
+                <ion-button (click)="changeStage(3)" class="button">
+                  Cambiar
+                </ion-button>
+              </ion-col>
+            </ion-row>
 
-              </ion-grid>
-              <ion-row class="d-flex">
-                <ion-fab-button (click)="swapStations()" size="small" class="text-center"><ion-icon name="swap-vertical-outline"></ion-icon></ion-fab-button>
-              </ion-row>
-            </div>
+          </ion-grid>
+          <ion-row class="d-flex">
+            <ion-fab-button (click)="swapStations()" size="small" class="text-center"><ion-icon
+                name="swap-vertical-outline"></ion-icon></ion-fab-button>
+          </ion-row>
+        </div>
 
-          </ion-fab>
-        }
-        @case (3) {
-          <ion-fab slot="fixed" vertical="top" horizontal="center">
-            <div class="trip-container">
-              <ion-row class="text-center">
-                <h6>Confirma tu estación de destino</h6>
-              </ion-row>
-            </div>
-          </ion-fab>
-        }
-        @case (4) {
-          <ion-fab slot="fixed" vertical="top" horizontal="center">
-            <div class="trip-container">
-              <ion-row>
-                <h6 class="text-center">Confirma tu estación de origen</h6>
-              </ion-row>
-            </div>
-          </ion-fab>
+      </ion-accordion>
+    </ion-accordion-group>
 
-        }
-      }
+  </ion-fab>
+  }
+  @case (3) {
+  <ion-fab slot="fixed" vertical="top" horizontal="center">
+    <div class="trip-container">
+      <ion-row>
+        <h6 class="text-center">Confirma tu estación de destino</h6>
+      </ion-row>
+    </div>
+  </ion-fab>
+  }
+  @case (4) {
+  <ion-fab slot="fixed" vertical="top" horizontal="center">
+    <div class="trip-container">
+      <ion-row>
+        <h6 class="text-center">Confirma tu estación de origen</h6>
+      </ion-row>
+    </div>
+  </ion-fab>
+
+  }
+  @case(6){
+
+  <ion-fab slot="fixed" vertical="top" horizontal="center">
+    <div class="trip-container">
+      <ion-row>
+        <h6 class="text-center">Tipo: {{tipoViaje === 'INSTANTANEO' ? 'instantaneo':'reserva'}}</h6>
+      </ion-row>
+    </div>
+    <ion-accordion-group id="resume" class="trip-container resume">
+
+      <ion-accordion value="first">
+        <ion-item slot="header" color="light">
+          <ion-label>Estaciones</ion-label>
+        </ion-item>
+        <div class="ion-padding" slot="content">
+          <ion-grid>
+            <ion-row class="d-flex">
+              <ion-col size="3">
+                <p>Origen:</p>
+              </ion-col>
+              <ion-col>
+                <strong>{{originStation}}</strong>
+              </ion-col>
+            </ion-row>
+            <ion-row class="d-flex">
+              <ion-col size="3">
+                <p>
+                  Destino:
+                </p>
+              </ion-col>
+              <ion-col>
+                <strong>{{destinationStation}}</strong>
+              </ion-col>
+            </ion-row>
+
+          </ion-grid>
+        </div>
+      </ion-accordion>
+    </ion-accordion-group>
+  </ion-fab>
+
+  }
+  }
 
 
-      @if((stage === 0 || stage ===1 || stage === 3 || stage === 4)){
 
-        <ion-fab slot="fixed" horizontal="center" vertical="bottom">
-          <ion-fab-button id="open-modal" class="station-button">
-            <ion-icon name="bicycle"></ion-icon>
-            Buscar estación
-          </ion-fab-button> 
-        </ion-fab>
-      }
 
-      @if(stage === 2){
-        <ion-fab slot="fixed" horizontal="center" vertical="bottom">
-          <ion-fab-button (click)="confirmTrip()"class="station-button">
-            <ion-icon name="checkmark-outline"></ion-icon>
-            Vamos!
-          </ion-fab-button>
-        </ion-fab>
-      }
-      @if (stage ===5) {
-        <ion-fab slot="fixed" horizontal="center" vertical="bottom">
-          <div class="trip-container">
-            <ion-grid>
-              <ion-row>
-                <h6 class="text-center">
-                  ¿Cuando quieres abordar?
-                </h6>
-              </ion-row>
-              <ion-row>
-                <ion-col>
-                  <ion-fab-button (click)="startTrip()" class="confirm-button">Ahora mismo</ion-fab-button>
-                </ion-col>
-                <ion-col>
-                  <ion-fab-button (click)="otherMoment()" class="confirm-button">En otro momento</ion-fab-button>
-                </ion-col>
-              </ion-row>
-            </ion-grid>
-          </div>
-        </ion-fab>
-      }
 
-    <ion-modal
-    #modal
-    trigger="open-modal"
-    [initialBreakpoint]="0.25"
-    [breakpoints]="[0,0.25,0.5, 0.75, 1]"
-    [backdropDismiss]="true"
-    [animated]="true"
-    [canDismiss]="true"
-    [backdropBreakpoint]="0.5"
-  > 
+
+  @if((stage === 0 || stage ===1 || stage === 3 || stage === 4)){
+
+  <ion-fab slot="fixed" horizontal="center" vertical="bottom">
+    <ion-fab-button id="open-modal" class="station-button">
+      <ion-icon name="bicycle"></ion-icon>
+      Buscar estación
+    </ion-fab-button>
+  </ion-fab>
+  }
+
+  @if(stage === 2){
+  <ion-fab slot="fixed" horizontal="center" vertical="bottom">
+    <ion-fab-button [disabled]="originStation == null || destinationStation == null"
+      [activated]="originStation  == null|| destinationStation == null" (click)="changeStage(5)" class="station-button">
+      <ion-icon name="checkmark-outline"></ion-icon>
+      Vamos!
+    </ion-fab-button>
+  </ion-fab>
+  }
+  @if (stage ===5) {
+  <ion-fab slot="fixed" horizontal="center" vertical="bottom">
+    <div class="trip-container">
+      <ion-grid>
+        <ion-row>
+          <h6 class="text-center">
+            ¿Cuando quieres abordar?
+          </h6>
+        </ion-row>
+        <ion-row style="margin-top: 10px;">
+          <ion-col>
+            <ion-fab-button (click)="confirmInstantTrip()" class="confirm-button">Ahora mismo</ion-fab-button>
+          </ion-col>
+          <ion-col>
+            <ion-fab-button (click)="confirmReservedTrip()" class="confirm-button">En otro momento</ion-fab-button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </div>
+  </ion-fab>
+  }
+  @if(stage === 8){
+  <ion-fab slot="fixed" horizontal="center" vertical="bottom">
+    <div class="trip-container">
+      <ion-grid>
+        <ion-row>
+          <h6 class="text-center">
+            Dirígete a la estación {{originStation}} para recoger
+            tu vehículo e iniciar él viaje.
+          </h6>
+        </ion-row>
+        <ion-row style="margin-top: 10px;">
+          <ion-col class="d-flex-center">
+            <ion-fab-button (click)="changeStage(9)" class="station-button">Llegué a la estación</ion-fab-button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </div>
+  </ion-fab>
+  }
+  @if(stage === 9){
+  <ion-fab slot="fixed" horizontal="center" vertical="bottom">
+    <div class="trip-container">
+      <ion-grid>
+        <ion-row>
+          <p class="text-center">
+            Notifica al encargado de la estación que estás listo para iniciar el viaje.
+          </p>
+        </ion-row>
+      </ion-grid>
+    </div>
+  </ion-fab>
+}
+  @if(stage === 10){
+    <ion-fab slot="fixed" horizontal="center" vertical="bottom">
+      <div class="trip-container">
+        <ion-grid>
+          <ion-row>
+            <p class="text-center">
+              Dirígete a la estación {{destinationDuration}},
+te estaremos esperando.
+            </p>
+          </ion-row>
+        </ion-grid>
+      </div>
+    </ion-fab>
+  }
+
+
+
+  <ion-modal #modal trigger="open-modal" [initialBreakpoint]="0.25" [breakpoints]="[0,0.25,0.5, 0.75, 1]"
+    [animated]="true" [backdropDismiss]="true">
     <ng-template>
       <ion-content class="ion-padding">
         <app-search-bar-results (selected)="closeModal($event)">
@@ -193,8 +292,189 @@
     </ng-template>
   </ion-modal>
 
+  <ion-modal #modalSelVeh [isOpen]="stage === 6" [initialBreakpoint]="0.8" [breakpoints]="[0.4, 0.80, 1]"
+    [backdropDismiss]="false" [backdropBreakpoint]="0.4">
+    <ng-template>
+      <ion-content class="ion-padding">
+        <app-vehicle-list [vehicles]="vehicles" (selectedVehicle)="selectVehicle($event)" [tipoViaje]="tipoViaje"></app-vehicle-list>
+        <div class="confirm-vehicle">
+          <ion-fab-button class="confirm-button" [activated]="!selectedVehicle" [disabled]="!selectedVehicle"
+            (click)="changeStage(7)">Confirmar</ion-fab-button>
+        </div>
+
+      </ion-content>
+    </ng-template>
+
+  </ion-modal>
+
+  <ion-modal #modalCond [isOpen]="stage === 7" [initialBreakpoint]="0.6" [backdropDismiss]="false"
+    [backdropBreakpoint]="0.6">
+    <ng-template>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Condiciones del viaje</ion-title>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content class="ion-padding">
+        <ion-grid id="grid-cond">
+          @if(tipoViaje === 'RESERVADO'){
+          <ion-row class="ion-align-items-end ion-justify-content-between">
+            <ion-col size="8">
+              <p>
+                Recogida máxima sin penalidad:
+              </p>
+            </ion-col>
+            <ion-col class="d-flex-end">
+              <p>9:40 a.m.</p>
+            </ion-col>
+
+          </ion-row>
+          <ion-row>
+            <ion-col size="8">
+
+              <small>
+                (Esta es la hora máxima en la que debes llegar
+                a recoger el vehículo a la estación)
+              </small>
+
+            </ion-col>
+          </ion-row>
+          }
+          <ion-row class="ion-align-items-end ion-justify-content-between">
+            <ion-col size="8">
+              <p>
+                Tiempo incluido en la tarifa:
+              </p>
+            </ion-col>
+            <ion-col class="d-flex-end">
+              <p>25 minutos</p>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size="8">
+              <small>
+                (Este es el tiempo del que dispones para completar
+                el recorrido despues de abordar sin costos extras)
+              </small>
+            </ion-col>
+            <ion-col>
+
+            </ion-col>
+          </ion-row>
+          <ion-row class="ion-align-items-end ion-justify-content-between">
+            <ion-col>
+              <p>Tarifa</p>
+            </ion-col>
+            <ion-col class="d-flex-end">
+              <p>$800</p>
+            </ion-col>
+          </ion-row>
+          @if(tipoViaje === 'RESERVADO'){
+          <ion-row class="ion-align-items-end ion-justify-content-between">
+            <ion-col size="8">
+              <p>Multa por no llegar:</p>
+            </ion-col>
+            <ion-col class="d-flex-end">
+              <p>$800</p>
+            </ion-col>
+          </ion-row>
+          }
+          <ion-row class="ion-align-items-end ion-justify-content-between">
+            <ion-col size="8">
+              <p>Precio minuto extra en recorrido</p>
+            </ion-col>
+            <ion-col class="d-flex-end">
+              <p>$25</p>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+        <ion-row class="ion-justify-content-center">
+          <ion-col class="d-flex-center">
+            <ion-fab-button (click)="changeStage(6)" class="confirm-button">Cancelar</ion-fab-button>
+          </ion-col>
+          <ion-col class="d-flex-center">
+            <ion-fab-button (click)="changeStage(8)" class="confirm-button">Aceptar</ion-fab-button>
+          </ion-col>
+        </ion-row>
+
+      </ion-content>
+    </ng-template>
+
+  </ion-modal>
+
+  <ion-modal #modalItin trigger="open-itin" [initialBreakpoint]="0.4" [backdropDismiss]="true"
+  [backdropBreakpoint]="0.4">
+  <ng-template>
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>Itinerario del viaje:</ion-title>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content class="ion-padding">
+      @if(tipoViaje===  "INSTANTANEO"){
+        <p style="text-align: justify;">Tienes hasta las 9:40 a.m para llegar
+          a la estación origen, después de esta
+          hora se te cobrará una penalidad por
+          minuto. </p>
+          <small style="margin-top: 10px;">
+            El viaje se cancelará automáticamente después de esta hora
+          </small>
+      }@else{
+        <p>Tienes hasta las 9:40 a.m para llegar
+          a la estación origen, después de esta
+          hora se te cobrará una penalidad por
+          minuto. </p>
+          <small style="margin-top: 10px;">
+            El viaje se cancelará automáticamente después de las 9:50
+          </small>
+      }
+        <ion-grid>
+          <ion-row class="ion-align-items-end ion-justify-content-between">
+            <ion-col>Tarifa base</ion-col>
+            <ion-col class="d-flex-end">$800</ion-col>
+          </ion-row>
+          <ion-row class="ion-align-items-end ion-justify-content-between">
+            <ion-col>Minuto extra</ion-col>
+            <ion-col class="d-flex-end">$25</ion-col>
+          </ion-row>
+          <ion-row class="ion-align-items-end ion-justify-content-between">
+            <ion-col>Multa</ion-col>
+            <ion-col class="d-flex-end">$800</ion-col>
+          </ion-row>
+        </ion-grid>
+    </ion-content>
+  </ng-template>
+
+  </ion-modal>
+
+  <ion-modal #modalCan trigger="open-can" [initialBreakpoint]="0.4" [backdropDismiss]="true"
+  [backdropBreakpoint]="0.4">
+  <ng-template>
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>Gestión del viaje:</ion-title>
+      </ion-toolbar>
+    </ion-header>
+
+      <ion-content class="ion-padding">
+
+        <p>
+          ¿Estás seguro que deseas cancelar tu viaje?
+        </p>
+        <ion-row style="margin-top: 20px;" class="ion-justify-content-center">
+          <ion-col class="d-flex-center">
+            <ion-fab-button  class="confirm-button">Volver</ion-fab-button>
+          </ion-col>
+          <ion-col class="d-flex-center">
+            <ion-fab-button  class="confirm-button">Confirmarr</ion-fab-button>
+          </ion-col>
+        </ion-row>
+        </ion-content>
+  </ng-template>
+
+
+  </ion-modal>
+
   }
 
 </ion-content>
-
-

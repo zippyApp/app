@@ -1,0 +1,20 @@
+<ion-accordion-group #accordion (ionChange)="emitValue()">
+
+
+  @for (vehicle of vehicles; track vehicle) {
+    <app-vehicle
+    [selected]="valueSelected === vehicle"
+    [tipoViaje]="tipoViaje"
+    [value]="vehicle"
+    [nombreImagen]="vehicle"
+    >
+
+    </app-vehicle>
+  }
+<!--
+
+  <app-vehicle [selected]="valueSelected === 'scooter1'" [tipoViaje]="tipoViaje" [value]="'scooter1'" nombreImagen="scooter-2"></app-vehicle>
+  <app-vehicle [selected]="valueSelected === 'scooter2'" [tipoViaje]="tipoViaje" [value]="'scooter2'" nombreImagen="scooter-2"></app-vehicle>
+  <app-vehicle [selected]="valueSelected === 'scooter3'" [tipoViaje]="tipoViaje" [value]="'scooter3'" nombreImagen="scooter-2"></app-vehicle> -->
+</ion-accordion-group>
+
