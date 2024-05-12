@@ -15,7 +15,7 @@ export class MapService {
   private directionsApi:DirectionsApiClient = inject(DirectionsApiClient);
   private actionSheetCtrl: ActionSheetController = inject(ActionSheetController);
 
-  stage:Stage = Stage.CONFIRMANDO;
+  stage: Stage = Stage.DESTINO;
 
   originStation?:string | null;
   destinationStation?:string | null;
