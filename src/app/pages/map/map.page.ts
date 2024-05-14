@@ -105,10 +105,12 @@ export class MapPage {
   }
 
   changeStage(stage: Stage) {
+    this.mapService.setStage(stage);
     if(stage === Stage.CAMBIO_DESTINO || stage === Stage.CAMBIO_ORIGEN){
+      this.mapService.cleanPolylines();
+      this.placesServices.getStations();
       this.modal?.present();
     }
-    this.mapService.setStage(stage);
     if(stage === Stage['SELECCION-VEHICULO']){{
       this.modaSelVeh?.dismiss();
       this.modalCond?.dismiss();
@@ -152,19 +154,16 @@ export class MapPage {
 
   }
 
-  startTrip() {
-    if (this.originStation == null || this.destinationStation == null) return;
+  async startTrip() {
+    this.mapService.cleanPolylines();
+    if (this.originStation == null || this.destinationStation == null) {return};
     if (!this.placesServices.userLocation) throw Error('No hay ubicación del usuario');
 
-
-    const originStation = this.searchStation(this.originStation!);
-    const coordsOrigin = [originStation?.longitude, originStation?.latitude] as [number, number];
-    const destinationStation = this.searchStation(this.destinationStation!);
-    const coordsDestination = [destinationStation?.longitude, destinationStation?.latitude] as [number, number];
     const currentLocation = this.placesServices.userLocation!;
+    
+    await this.mapService.getRouteToOrgin(currentLocation, this.originStation?.id, 'blue', 'RouteOrigin', this.placesServices.userLocation);
+    await this.mapService.getRouteToDestination(this.originStation?.id, this.destinationStation?.id, 'red', 'RouteDestination', this.placesServices.userLocation);
 
-    this.mapService.getRouteBetweenPoints(currentLocation, coordsOrigin!, 'blue', 'RouteOrigin', this.placesServices.userLocation);
-    this.mapService.getRouteBetweenPoints(coordsOrigin, coordsDestination, 'red', 'RouteDestination', this.placesServices.userLocation);
   }
 
   searchStation(nombreEstacion: string) {
