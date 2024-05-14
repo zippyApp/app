@@ -34,7 +34,7 @@ ion-fab-button {
   }
 
   .modal{
-    top:10px
+    top:2px
   }
 
   .trip-container{
@@ -45,7 +45,9 @@ ion-fab-button {
     box-shadow: 0px 10px 0px rgba(0,0,0,0.2);
     color:black;
     margin-bottom: 20px;
+    align-items: center;
   }
+
   .resume{
     margin-top: 10px;
   }
@@ -89,9 +91,13 @@ ion-fab-button {
 
 
   ion-row{
-    margin-bottom: 10px;
+    margin-top: 5px;
+    margin-bottom: 5px;
   }
 
+  .padding{
+    align-items: center;
+  }
 
   .timer-container{
     flex-direction: column;

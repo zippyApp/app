@@ -17,8 +17,8 @@ export class MapService {
 
   stage: Stage = Stage.DESTINO;
 
-  originStation?:string | null;
-  destinationStation?:string | null;
+  originStation?:Station | null;
+  destinationStation?:Station | null;
 
   private map?:Map;
   private markers:Marker[] = [];
@@ -56,10 +56,10 @@ export class MapService {
     this.stageObservable.next(stage);
     this.stage = stage;
   }
-  setOriginStation(station:string){
+  setOriginStation(station:Station){
     this.originStation = station;
   }
-  setDestinationStation(station:string){
+  setDestinationStation(station:Station){
     this.destinationStation = station;
   }
 
@@ -95,25 +95,28 @@ export class MapService {
           const confirm = await this.confirmStation(station);
           if(confirm){
             if(this.stage === Stage.DESTINO){
-              this.destinationStation = station.stationName;
+              this.destinationStation = station;
               this.setStage(Stage.ORIGEN);
             }
             else if(this.stage === Stage.ORIGEN){
-              this.originStation = station.stationName;
+              if (this.destinationStation?.id == station.id) {
+                this.destinationStation = null;
+              };
+              this.originStation = station;
               this.setStage(Stage.CONFIRMACION);
             }
             else if(this.stage === Stage.CAMBIO_DESTINO){
-              if(this.originStation === station.stationName) {
+              if(this.originStation?.id == station.id) {
                 this.originStation = null;
               };
-              this.destinationStation = station.stationName;
+              this.destinationStation = station;
               this.setStage(Stage.CONFIRMACION);
             }
             else if(this.stage === Stage.CAMBIO_ORIGEN){
-              if(this.destinationStation === station.stationName) {
+              if(this.destinationStation?.id == station.id) {
                 this.destinationStation = null;
               };
-              this.originStation = station.stationName;
+              this.originStation = station;
               this.setStage(Stage.CONFIRMACION);
             }
 
@@ -144,11 +147,50 @@ export class MapService {
     })
   }
 
-  getRouteBetweenPoints(start:[number, number], end:[number,number], color:string, routeName:string, currentLocation:[number,number]){
-    const typeOfVehicle = routeName === 'RouteOrigin' ? 'walking' : 'cycling';
-    this.directionsApi.get<DirectionsResponse>('/'+typeOfVehicle +`/${start.join(',')};${end.join(',')}`)
-      .subscribe(resp => this.drawPolyline(resp.routes[0],color,routeName, currentLocation));
+  //Para que elimine los markers excepto los que corresponden a la stacion de origen y destino seleccionadas
+  deleteMarkersDifferentsToOriginAndDestination() {
 
+    const originCoordinates = [this.originStation!.longitude, this.originStation!.latitude];
+    const destinationCoordinates = [this.destinationStation!.longitude, this.destinationStation!.latitude];
+
+    this.markers.forEach(marker => {
+      const coords = marker.getLngLat();
+      if(coords.lng !== originCoordinates[0] && coords.lat !== originCoordinates[1] &&
+        coords.lng !== destinationCoordinates[0] && coords.lat !== destinationCoordinates[1]){
+          marker.remove();
+        };
+    });
+
+  }
+
+  async getRouteToOrgin(userCoordinates: [number, number], originStationId: number, color: string, routeName: string, currentLocation: [number, number]) {
+    return new Promise<void>((resolve, reject) => {
+      this.directionsApi.get<DirectionsResponse>(`toOrigin/${userCoordinates.join(',')}/${originStationId}`)
+        .subscribe(
+          resp => {
+            this.drawPolyline(resp.routes[0], color, routeName, currentLocation);
+            resolve(); // Resuelve la promesa cuando la operación asíncrona se completa con éxito
+          },
+          error => {
+            reject(error); // Rechaza la promesa si ocurre un error
+          }
+        );
+    });
+  }
+
+  async getRouteToDestination(originStationId: number, destinationStationId: number, color: string, routeName: string, currentLocation: [number, number]) {
+    return new Promise<void>((resolve, reject) => {
+      this.directionsApi.get<DirectionsResponse>('toDestination/' + `${originStationId}/${destinationStationId}`)
+        .subscribe(
+          resp => {
+            this.drawPolyline(resp.routes[0], color, routeName, currentLocation);
+            resolve(); // Resuelve la promesa cuando la operación asíncrona se completa con éxito
+          },
+          error => {
+            reject(error); // Rechaza la promesa si ocurre un error
+          }
+        );
+    });
   }
 
   private drawPolyline(route:Route, color:string, routeName:string, currentLocation:[number,number]){
@@ -199,12 +241,12 @@ export class MapService {
         }],
       }
     }
-    //Para que elimine rutas previas renderizadas en el mapa
-    if(this.map.getLayer(routeName)) {
-      this.map.removeLayer(routeName);
-      this.map.removeSource(routeName);
-      this.map.removeLayer(routeName +'TimeDistanceLayer')
-      this.map.removeSource(routeName +'middleCoordinate')
+    //Para que elimine los markers excepto los que corresponden a lestacion de origen y destino seleccionadas
+    this.deleteMarkersDifferentsToOriginAndDestination();
+    try {
+      this.map?.removeImage(routeName+'Box');
+    } catch (error) {
+      console.log('error')
     }
     //Renderizar ruta
     this.map.addSource(routeName, RouteData);
@@ -245,28 +287,29 @@ export class MapService {
     }
 
     this.map.addSource(routeName + 'middleCoordinate', middleRouteCoordinate);
-    const imageUrl: string = routeName === 'RouteOrigin' ? './assets/etiquetaAzulCaminando.png' : './assets/etiquetaRojaCicla.png';
+    const imageUrl: string = routeName === 'RouteOrigin' ? './assets/etiquetaAzulCaminandoDerecha.png' : './assets/etiquetaRojaCicla.png';
 
     this.map.loadImage(imageUrl, (error: any, image: any) => {
       if (error) {
         console.error('Error al cargar la imagen:', error);
       } else {
-        // Agrega la imagen al estilo con el nombre 'whiteBox'
+        // Agrega la imagen al estilo con el nombre 'Box'
         if (this.map) {
-          this.map.addImage(routeName+'whiteBox', image);
+          this.map.addImage(routeName+'Box', image);
           this.map.addLayer({
             id: routeName + 'TimeDistanceLayer',
             type: 'symbol',
             source: routeName + 'middleCoordinate',
             layout: {
               'icon-allow-overlap':true,
-              'icon-image': routeName + 'whiteBox',
+              'icon-ignore-placement':true,
+              'icon-image': routeName + 'Box',
               'text-field': ['concat', duration + ' min\n', distance.toFixed(2) + ' kms\n'],
               'text-font': ['Open Sans Regular'],
               'text-size': 12,
-              'text-offset': [-4, 0],
+              'text-offset': routeName === 'RouteOrigin' ? [4, 0] : [-4, 0],
               'icon-text-fit': 'both',
-              'icon-text-fit-padding': [10, 26, 25, 10]
+              'icon-text-fit-padding': routeName === 'RouteOrigin' ? [10, 10, 25, 26]  : [10, 26, 25, 10]
             },
             paint: {
               'text-color': 'black'
@@ -275,6 +318,42 @@ export class MapService {
         }
       }
     });
+  }
+
+  cleanPolylines() {
+    
+    if (this.map?.getLayer('RouteDestination')) {
+      this.map?.removeLayer('RouteDestination');
+    }
+
+    if (this.map?.getSource('RouteDestination')) {
+      this.map?.removeSource('RouteDestination');
+    }
+
+    if (this.map?.getLayer('RouteDestination' + 'TimeDistanceLayer')) {
+      this.map?.removeLayer('RouteDestination' + 'TimeDistanceLayer');
+    }
+
+    if (this.map?.getSource('RouteDestination' + 'middleCoordinate')) {
+      this.map?.removeSource('RouteDestination' + 'middleCoordinate');
+    }
+
+    if (this.map?.getLayer('RouteOrigin')) {
+      this.map?.removeLayer('RouteOrigin');
+    }
+
+    if (this.map?.getSource('RouteOrigin')) {
+      this.map?.removeSource('RouteOrigin');
+    }
+
+    if (this.map?.getLayer('RouteOrigin' + 'TimeDistanceLayer')) {
+      this.map?.removeLayer('RouteOrigin' + 'TimeDistanceLayer');
+    }
+
+    if (this.map?.getSource('RouteOrigin' + 'middleCoordinate')) {
+      this.map?.removeSource('RouteOrigin' + 'middleCoordinate');
+    }
+
   }
 
   async confirmStation(station:Station){
