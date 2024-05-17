@@ -55,21 +55,21 @@
   <ion-fab class="modal" slot="fixed" vertical="top" horizontal="center">
     <div class="trip-container">
       <ion-row>
-        <h6 class="text-center">¿A donde vamos?</h6>
+        <h4 class="text-center">¿A dónde vamos?</h4>
       </ion-row>
       <ion-row>
         <p class="text-center">
-          Selecciona una estación o buscala abajo
+          Selecciona una estación de <b>destino.</b>
         </p>
       </ion-row>
     </div>
   </ion-fab>
   }
   @case (1) {
-  <ion-fab slot="fixed" vertical="top" horizontal="center">
+  <ion-fab class="modal" slot="fixed" vertical="top" horizontal="center">
     <div class="trip-container">
       <ion-row>
-        <h6 class="text-center">Confirma tu estación de origen</h6>
+        <h6 class="text-center"  style="padding: 10px;">Confirma tu estación de <b>origen.</b></h6>
       </ion-row>
     </div>
   </ion-fab>
@@ -89,7 +89,7 @@
                 <p>Origen:</p>
               </ion-col>
               <ion-col>
-                <strong>{{originStation}}</strong>
+                <strong>{{originStation?.stationName}}</strong>
               </ion-col>
               <ion-col>
                 <ion-button (click)="changeStage(4)" class="button">
@@ -104,7 +104,7 @@
                 </p>
               </ion-col>
               <ion-col>
-                <strong>{{destinationStation}}</strong>
+                <strong>{{destinationStation?.stationName}}</strong>
               </ion-col>
               <ion-col>
                 <ion-button (click)="changeStage(3)" class="button">
@@ -142,7 +142,6 @@
       </ion-row>
     </div>
   </ion-fab>
-
   }
   @case(6){
 
@@ -165,7 +164,7 @@
                 <p>Origen:</p>
               </ion-col>
               <ion-col>
-                <strong>{{originStation}}</strong>
+                <strong>{{originStation?.stationName}}</strong>
               </ion-col>
             </ion-row>
             <ion-row class="d-flex">
@@ -175,7 +174,7 @@
                 </p>
               </ion-col>
               <ion-col>
-                <strong>{{destinationStation}}</strong>
+                <strong>{{destinationStation?.stationName}}</strong>
               </ion-col>
             </ion-row>
 
@@ -205,8 +204,8 @@
 
   @if(stage === 2){
   <ion-fab slot="fixed" horizontal="center" vertical="bottom">
-    <ion-fab-button [disabled]="originStation == null || destinationStation == null"
-      [activated]="originStation  == null|| destinationStation == null" (click)="changeStage(5)" class="station-button">
+    <ion-fab-button [disabled]="originStation === null || destinationStation === null"
+      [activated]="originStation  === null|| destinationStation === null" (click)="changeStage(5)" class="station-button">
       <ion-icon name="checkmark-outline"></ion-icon>
       Vamos!
     </ion-fab-button>
@@ -239,7 +238,7 @@
       <ion-grid>
         <ion-row>
           <h6 class="text-center">
-            Dirígete a la estación {{originStation}} para recoger
+            Dirígete a la estación {{originStation?.stationName}} para recoger
             tu vehículo e iniciar él viaje.
           </h6>
         </ion-row>
@@ -467,7 +466,7 @@ te estaremos esperando.
             <ion-fab-button  class="confirm-button">Volver</ion-fab-button>
           </ion-col>
           <ion-col class="d-flex-center">
-            <ion-fab-button  class="confirm-button">Confirmarr</ion-fab-button>
+            <ion-fab-button  class="confirm-button">Confirmar</ion-fab-button>
           </ion-col>
         </ion-row>
         </ion-content>
