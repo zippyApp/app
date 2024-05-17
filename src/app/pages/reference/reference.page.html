@@ -1,5 +1,5 @@
 <app-header backButton="/auth" [showBackText]="false" title='Registro contacto de emergencia'></app-header>
-
+<ion-menu side="end" contentId="main-content" menuId="menu-id" class="menu-hidden"></ion-menu>
 <ion-content >
     <div class="d-flex-center">
         <form [formGroup]="form" class="auth-form" >
@@ -28,7 +28,7 @@
             ></app-custom-input>
 
             <div class="validators" *ngIf="form.controls['last_names'].errors && form.controls['last_names'].touched">
-                <div *ngIf="form.controls['last_names'].errors?.['required']">Debe ingresar al menso un apellido</div>
+                <div *ngIf="form.controls['last_names'].errors?.['required']">Debe ingresar al menos un apellido</div>
                 <div *ngIf="form.controls['last_names'].errors?.['minlength']">El apellido debe tener 4 caracteres</div>
             </div>
             <!-- ================== Type Document ==================--> 

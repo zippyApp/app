@@ -140,3 +140,24 @@ ion-button {
         --height: 680px;
     }
 }
+
+:root {
+    --ion-color-gray: #d7d0d167;
+    --ion-color-gray-rgb: 254, 205, 211;
+    --ion-color-gray-contrast: #000000;
+    --ion-color-gray-contrast-rgb: 0, 0, 0;
+    --ion-color-gray-shade: #90898a;
+    --ion-color-gray-tint: #5c5959;
+    --ion-color-gray-text: #ffffff;
+  }
+  
+  .ion-color-gray {
+    --ion-color-base: var(--ion-color-gray);
+    --ion-color-base-rgb: var(--ion-color-gray-rgb);
+    --ion-color-contrast: var(--ion-color-gray-contrast);
+    --ion-color-contrast-rgb: var(--ion-color-gray-contrast-rgb);
+    --ion-color-shade: var(--ion-color-gray-shade);
+    --ion-color-tint: var(--ion-color-gray-tint);
+    --ion-color-gray-text: var(--ion-color-gray-text);
+
+  }

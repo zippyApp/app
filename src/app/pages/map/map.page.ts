@@ -22,6 +22,7 @@ import { SearchBarResultsComponent } from 'src/app/components/search-bar-results
 import { HttpClientModule } from '@angular/common/http';
 import { Stage, Station } from 'src/app/interfaces/station';
 import { VehicleListComponent } from 'src/app/components/vehicle-list/vehicle-list.component';
+import { MenuController } from '@ionic/angular';
 
 @Component({
   selector: 'app-map',
@@ -80,7 +81,7 @@ export class MapPage {
   @ViewChild('select') select?: any;
 
 
-  constructor() {
+  constructor(private menu: MenuController) {
     addIcons({ locateOutline, bicycle, swapVerticalOutline, checkmarkOutline, chevronForwardCircle, returnUpBackOutline});
   }
 
@@ -102,6 +103,11 @@ export class MapPage {
 
   }
   ionViewWillEnter() {
+    this.menu.enable(false, 'menu-id'); 
+  }
+
+  ionViewWillLeave() {
+    this.menu.enable(true, 'menu-id');
   }
 
   changeStage(stage: Stage) {

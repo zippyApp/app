@@ -29,5 +29,9 @@ export const routes: Routes = [
   {
     path: 'card-image',
     loadComponent: () => import('./pages/card-image/card-image.page').then( m => m.CardImagePage)
+  },  {
+    path: 'trips',
+    loadComponent: () => import('./pages/trips/trips.page').then( m => m.TripsPage)
   },
+
 ];
