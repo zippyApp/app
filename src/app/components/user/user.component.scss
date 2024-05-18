@@ -1,0 +1,52 @@
+.ion-img{
+    width: 10vh;
+    height: 10vh;
+    // mix-blend-mode: multiply;
+    // background-color: transparent;
+  
+  
+  }
+  
+  .ion-img-selected{
+    width: 10vh;
+    height: 10vh;
+    filter: invert(100%);
+  }
+  
+  .wrapper{
+    width: 100%;
+  }
+  
+  .align-center{
+    text-align: center;
+  }
+  
+  
+  .color-white{
+    color: white;
+  }
+  .d-flex{
+    display: flex;
+    justify-content: center;
+  }
+  
+  .d-flex-end{
+    display: flex;
+    justify-content: flex-end;
+  }
+  
+  p{
+    margin: 0px 0px 0px 0px;
+  }
+  
+  .ion-accordion{
+    color: white;
+    background-color: #011629 !important;
+  }
+  
+  
+  :host ::ng-deep ion-icon.ion-accordion-toggle-icon {
+    color: var(--color-accordion);
+  
+  }
+  

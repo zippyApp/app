@@ -2,13 +2,14 @@ import { Component, OnInit, ViewChild, QueryList, ViewChildren } from '@angular/
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonContent, IonCol, IonIcon, IonFabButton, IonAccordionGroup, IonList, IonItem, IonRow, IonAccordion, IonSegment, IonSegmentButton, IonLabel, IonMenu, IonButtons, IonMenuButton,  IonHeader, IonTitle, IonToolbar } from '@ionic/angular/standalone';
+import { HeaderComponent } from '../../components/header/header.component';
 
 @Component({
   selector: 'app-trips',
   templateUrl: './trips.page.html',
   styleUrls: ['./trips.page.scss'],
   standalone: true,
-  imports: [IonContent, IonHeader, IonIcon, IonFabButton, IonAccordionGroup, IonList, IonCol, IonItem, IonRow, IonAccordion, IonSegment, IonSegmentButton, IonLabel, IonButtons, IonMenuButton, IonMenu, IonTitle, IonToolbar, CommonModule, FormsModule]
+  imports: [IonContent, HeaderComponent, IonHeader, IonIcon, IonFabButton, IonAccordionGroup, IonList, IonCol, IonItem, IonRow, IonAccordion, IonSegment, IonSegmentButton, IonLabel, IonButtons, IonMenuButton, IonMenu, IonTitle, IonToolbar, CommonModule, FormsModule]
 })
 export class TripsPage implements OnInit {
   segment: string = 'salidas'; 

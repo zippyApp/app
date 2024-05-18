@@ -43,31 +43,60 @@ ion-fab-button.confirm-button{
     width: 200px;
   }
 }
+
 .salidas, .llegadas {
     justify-content: center;
     width: 50%;
     text-align: center;
-    font-weight: bold;
-    height: 0;
+    font-weight: 900;
+    flex: 1;
   }
-
+  .buttons.md{
+    display: flex;
+    width: 100%;
+    height: 10px;
+  }
+  .header.md {
+    display: flex;
+    height: 3em;
+    padding: 0;
+  }
+  .header.ios {
+    display: flex;
+    height: 2.2em;
+    margin-right: 20em;
+  }
+  .buttons.ios{
+    display: flex;
+    width: 300%;
+    padding-right: 0;
+    padding-left: 0;
+    padding-bottom: 100px;
+  }
 /* Material Design styles */
-.salidas, .segment-button-checked.md::part(native) {
-  color: #35bd57;
+.segment-button-checked.salidas.md::ng-deep{
+  color: #2abb4f;
+  background-color: #c0ddcbb6;
 }
-
-.llegadas, .segment-button-checked.md::part(native) {
-  color: #d932a4;
+.segment-button-checked.llegadas.md::ng-deep{
+  color: #ff5733;
+  background-color: #da544540;
 }
-
-ion-segment-button.md::part(native) {
-  color: #525453;
+.segment-button-checked-md::ng-deep, .salidas{
+  --indicator-color: #35bd57;
 }
-
-ion-segment-button.md::part(indicator-background) {
-  height: 4px;
+.segment-button-checked-md::ng-deep, .llegadas{
+  --indicator-color: #ff5733;
 }
-
+.segment-button.md::ng-deep, .salidas {
+  color: #757475;
+  height: 2px;
+}
+.segment-button.md::ng-deep, .llegadas {
+  color: #757475;
+  height: 2px;
+}
+/* iOS styles */
 .salidas.ios {
     background-color:  #c0c7c5;
     color:  #000000;
@@ -87,15 +116,5 @@ ion-segment-button.md::part(indicator-background) {
     font-size: 15px;
     font-weight: bold;
 }
-.buttons {
-    display: flex;
-    width: 100%;
-  }
-.salidas{
-    justify-content: center!important;
-}
 
-.llegadas{
-    justify-content: center!important;
-}
 
