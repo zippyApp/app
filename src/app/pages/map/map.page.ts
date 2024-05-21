@@ -126,7 +126,7 @@ export class MapPage {
   confirmInstantTrip() {
     this.changeStage(6);
     this.tipoViaje = 'INSTANTANEO';
-
+ 
   }
 
   confirmReservedTrip() {

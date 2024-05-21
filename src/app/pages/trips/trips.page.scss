@@ -2,28 +2,6 @@
   background-color: rgb(160, 179, 207)!important;
   height: 100%;
 }
- 
-ion-accordion{
-  border-radius: 3rem;
-  border-bottom: 3px solid #7a7c7e; 
-  border-top: 3px solid #7a7c7e; 
-  border-right: 3px solid #7a7c7e; 
-  border-left: 3px solid #7a7c7e; 
-}
-
-.selected {
-  color: white;
-  --ion-color-gray: #072646;
-  --background-checked: #072646;
-  font-weight: bold;
-  
-  .style{
-    color: white;
-  }
-  .custom--accordion ion-item[slot="header"]::after {
-    --ion-color: white; /* Asegura que el color de la flechita sea blanco */
-  }
-}
 
 ion-fab-button.confirm-button{
   width: 150px;

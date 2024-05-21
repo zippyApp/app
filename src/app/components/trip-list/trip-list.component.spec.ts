@@ -1,19 +1,19 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
-import { UserComponent } from './user.component';
+import { TripListComponent } from './trip-list.component';
 
-describe('UserComponent', () => {
-  let component: UserComponent;
-  let fixture: ComponentFixture<UserComponent>;
+describe('TripListComponent', () => {
+  let component: TripListComponent;
+  let fixture: ComponentFixture<TripListComponent>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ UserComponent ],
+      declarations: [ TripListComponent ],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(UserComponent);
+    fixture = TestBed.createComponent(TripListComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));

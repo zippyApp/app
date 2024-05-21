@@ -16,63 +16,29 @@
   <ion-header class="header">
     <ion-toolbar class="ion-accordion">
       <ion-segment [(ngModel)]="segment" (ionChange)="segmentChanged($event)" class="buttons">
-        <ion-segment-button value="salidas" class="salidas">
+        <ion-segment-button (click)="confirmDepartures()" value="salidas" class="salidas">
           <ion-label>SALIDAS</ion-label>
         </ion-segment-button>
-        <ion-segment-button value="llegadas" class="llegadas">
+        <ion-segment-button (click)="confirmArrivals()" value="llegadas" class="llegadas">
           <ion-label>LLEGADAS</ion-label>
         </ion-segment-button>
       </ion-segment>
     </ion-toolbar>
   </ion-header>
-<div id="ion-accordion">
+<div id="ion-accordion"> 
 <div *ngIf="segment === 'salidas'">
-  <ion-accordion-group>
-  <ion-accordion *ngFor="let usuario of salidasUsuarios" [value]="usuario.id">
-    <ion-item slot="header" color="gray" (click)="selectUsuario(usuario)" [ngClass]="{'selected': selectedUsuario === usuario}">
-      <ion-label class="style">{{ usuario.nombre }}</ion-label>
-    </ion-item>
-    <ion-list slot="content" class="ion-list">
-      <ion-item>
-        <ion-label>Detalles del usuario</ion-label>
-      </ion-item>
-      <ion-item>
-        <ion-label>Tipo: {{ usuario.tipo }}</ion-label>
-      </ion-item>
-      <ion-item>
-        <ion-label>Estado: {{ usuario.estado }}</ion-label>
-      </ion-item>
-      <!-- Agrega más detalles según sea necesario -->
-    </ion-list>
-  </ion-accordion>
-</ion-accordion-group>
+<app-trip-list (click)="confirmDepartures()" [vehicles]="vehicles" (selectedVehicle)="selectVehicle($event)" [estadoViaje]="estadoViaje" [tipoViaje]="tipoViaje" [nombreUsuarios]="nombreUsuarios" [tiempoMax]="tiempoMax"></app-trip-list>
+
 <div class="confirmar">
-  <ion-fab-button class="confirm-button" [activated]="!selectedUsuario" [disabled]="!selectedUsuario">Confirmar salida</ion-fab-button>
+  <ion-fab-button class="confirm-button" [activated]="!selectedVehicle" [disabled]="!selectedVehicle">Confirmar salida</ion-fab-button>
 </div>
 </div>
 
 <div *ngIf="segment === 'llegadas'"> 
-  <ion-accordion-group class="custom-accordion">
-  <ion-accordion *ngFor="let usuario of llegadasUsuarios" [value]="usuario.id">
-    <ion-item  slot="header" color="gray" (click)="selectUsuario(usuario)" [ngClass]="{'selected': selectedUsuario === usuario}">
-      <ion-label class="style">{{ usuario.nombre }}</ion-label>
-    </ion-item>
-    <ion-list slot="content" class="ion-list">
-      <ion-item>
-        <ion-label>Detalles del usuario</ion-label>
-      </ion-item>
-      <ion-item>
-        <ion-label>Tipo: {{ usuario.tipo }}</ion-label>
-      </ion-item>
-      <ion-item>
-        <ion-label>Estado: {{ usuario.estado }}</ion-label>
-      </ion-item>
-      <!-- Agrega más detalles según sea necesario -->
-    </ion-list>
-  </ion-accordion>
-</ion-accordion-group>
+<app-trip-list (click)="confirmArrivals()"  [vehicles]="vehicles" (selectedVehicle)="selectVehicle($event)" [estadoViaje]="shouldShowEstadoViaje ? estadoViaje : []" [tipoViaje]="tipoViaje" [tiempoMax]="tiempoMax" [nombreUsuarios]="nombreUsuarios"></app-trip-list>
+
 <div class="confirmar">
-  <ion-fab-button class="confirm-button" [activated]="!selectedUsuario" [disabled]="!selectedUsuario">Terminar viaje</ion-fab-button>
+  <ion-fab-button class="confirm-button" [activated]="!selectedVehicle" [disabled]="!selectedVehicle">Terminar viaje</ion-fab-button>
 </div>
 </div>
 </div>

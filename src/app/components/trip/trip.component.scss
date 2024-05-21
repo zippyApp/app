@@ -3,10 +3,8 @@
     height: 10vh;
     // mix-blend-mode: multiply;
     // background-color: transparent;
-  
-  
   }
-  
+
   .ion-img-selected{
     width: 10vh;
     height: 10vh;
@@ -21,10 +19,10 @@
     text-align: center;
   }
   
-  
   .color-white{
-    color: white;
+    color: #ffffff;
   }
+
   .d-flex{
     display: flex;
     justify-content: center;
@@ -42,11 +40,20 @@
   .ion-accordion{
     color: white;
     background-color: #011629 !important;
-  }
-  
+  } 
   
   :host ::ng-deep ion-icon.ion-accordion-toggle-icon {
-    color: var(--color-accordion);
-  
+    color: #011629;
   }
+
+  /*redondear tarjetas*/
+  ion-accordion{
+    border-radius: 2rem;
+    border-bottom: 3px solid #7a7c7e; 
+    border-top: 3px solid #7a7c7e; 
+    border-right: 3px solid #7a7c7e; 
+    border-left: 3px solid #7a7c7e; 
+  }
+
+  
   

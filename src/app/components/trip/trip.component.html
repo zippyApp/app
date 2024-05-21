@@ -1,27 +1,26 @@
-<!--Code para cada tarjeta-->
-<ion-accordion  [style]="{'--color-accordion':selected?'white':'black'}"  [class.ion-accordion]="selected" [value]="value">
-  <ion-item slot="header"  [color]="'xd'">
-    <ion-row  class="ion-align-items-center wrapper" >
+<!--Aquí se crea cada tarjeta con los datos necesarios-->
+<ion-accordion  [style]="{'--color-accordion':selected?'white':'black'}" [class.ion-accordion]="selected"  [value]="value">
+  <ion-item slot="header"  [color]="'xd'" class="selected">
+  <ion-grid>
+    <ion-row class="ion-align-items-center wrapper">
       <ion-col>
         <ion-img [class.ion-img-selected]="selected" [src]=" 'assets/vehicles-images/'+ nombreImagen +'.png'" alt=""></ion-img>
       </ion-col> 
       <ion-col> 
-        <p [class.color-white]="selected" class="align-center">{{value}}</p>
-      </ion-col>
-      <ion-col>
-        <div [class.color-white]="selected" class="d-flex">
-          $800 <br/>
-          Tarifa <br/>
-          Efectivo <br/>
-        </div>
-
+        <p class="align-center" [class.color-white]="selected">{{nombreUsuarios}}</p>
+        <p class="align-center" [class.color-white]="selected">{{estadoViaje}}</p>
       </ion-col>
     </ion-row>
-
+  </ion-grid>
   </ion-item>
   <div class="ion-padding" slot="content">
     <ion-grid>
       <ion-row ion-justify-content-around>
+        <ion-col size="10">
+          <p>
+            {{ tiempoMax === 'SALIDA'? 'Abordar máx:':'Llegada máx:'}}
+          </p>
+        </ion-col>
         <ion-col size="10">
           <p>
             {{ tipoViaje === 'INSTANTANEO'? 'Entregar antes de:':'Recoger antes de'}}
@@ -35,7 +34,7 @@
       </ion-row>
 
       <ion-row>
-        <ion-col  size="10">
+        <ion-col size="10">
           <p>
             Tiempo estimado:
           </p>
@@ -44,6 +43,3 @@
     </ion-grid>
   </div>
 </ion-accordion>
-
-
-

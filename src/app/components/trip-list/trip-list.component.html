@@ -1,0 +1,17 @@
+<!--Crea una tarjeta por cada vehículo que haya-->
+<!--en este caso se debe crear una tarjeta por cada viaje q sale o llega de la estacion-->
+<ion-accordion-group  #accordion (ionChange)="emitValue()">
+  
+    @for (vehicle of vehicles; track vehicle ) {
+    <app-trip 
+    [selected]="valueSelected === vehicle"
+    [nombreUsuarios]="nombreUsuarios"
+    [tipoViaje]="tipoViaje"
+    [tiempoMax]="tiempoMax"
+    [estadoViaje]="estadoViaje"
+    [value]="vehicle"
+    [nombreImagen]="getVehicleIcon(vehicle)">
+    > 
+    </app-trip>
+  }
+</ion-accordion-group>
