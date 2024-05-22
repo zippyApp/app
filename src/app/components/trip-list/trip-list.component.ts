@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { TripComponent } from '../trip/trip.component';
+import { CommonModule, NgFor } from '@angular/common';
 import { IonicModule,IonAccordionGroup } from '@ionic/angular';
 
 @Component({
@@ -7,14 +8,14 @@ import { IonicModule,IonAccordionGroup } from '@ionic/angular';
   templateUrl: './trip-list.component.html',
   styleUrls: ['./trip-list.component.scss'],
   standalone: true,
-  imports:[TripComponent, IonicModule]
+  imports:[TripComponent, CommonModule, NgFor, IonicModule]
 })
 export class TripListComponent  implements OnInit {
 
   
   @ViewChild('accordion') accordion?: IonAccordionGroup;
 
-  @Input({required: true}) tipoViaje!: 'INSTANTANEO' | 'RESERVA';
+  @Input({required: true}) tipoViaje!: string[];
 
   @Input({required: true}) estadoViaje!: string[];
 
@@ -22,22 +23,13 @@ export class TripListComponent  implements OnInit {
 
   @Input({required : true}) vehicles!: string[];
 
-  @Input({required : true}) nombreUsuarios!: string[];
+  @Input({required: true }) nombreUsuarios!: usuario[];
 
   @Output() selectedVehicle = new EventEmitter<string | string[] | null>();
-
 
   valueSelected: string | string[] | null | undefined;
 
   constructor() { }
-  private vehicleIconMap: { [key: string]: string } = {
-    'bike': 'bike',          // Replace with actual icon name or path
-    'e-bike': 'e-bike', // Replace with actual icon name or path
-    'scooter': 'scooter'   // Replace with actual icon name or path
-  };
-  getVehicleIcon(vehicle: string): string {
-    return this.vehicleIconMap[vehicle] || 'default-icon'; // Provide a default icon if vehicle is not found
-  }
  
   ngOnInit() {}
   
@@ -48,5 +40,8 @@ export class TripListComponent  implements OnInit {
   }
 
 
-
 }
+export interface usuario {
+  name: string;
+}
+
