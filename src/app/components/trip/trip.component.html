@@ -7,7 +7,7 @@
         <ion-img [class.ion-img-selected]="selected" [src]=" 'assets/vehicles-images/'+ nombreImagen +'.png'" alt=""></ion-img>
       </ion-col> 
       <ion-col>
-        <p class="align-center" [class.color-white]="selected"*ngFor="let item of nombreUsuarios">{{item.name}}</p>     
+        <p class="align-center" [class.color-white]="selected">{{nombreUsuarios.name}}</p>     
         <p class="align-center" [class.color-white]="selected">{{estadoViaje}}</p>
         <p class="align-center" [class.color-white]="selected">{{tipoViaje}}</p>
       </ion-col>

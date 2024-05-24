@@ -1,17 +1,16 @@
 <!--Crea una tarjeta por cada vehículo que haya-->
 <!--en este caso se debe crear una tarjeta por cada viaje q sale o llega de la estacion-->
 <ion-accordion-group  #accordion (ionChange)="emitValue()">
-
-    @for (vehicle of vehicles; let i=$index; track vehicle ) {
+  <ng-container *ngFor="let vehicle of vehicles; let i = index;">
     <app-trip 
     [selected]="valueSelected === vehicle"
-    [nombreUsuarios]="nombreUsuarios"
-    [tipoViaje]="tipoViaje"
+    [nombreUsuarios]="nombreUsuarios[i]"
+    [tipoViaje]="tipoViaje[i % tipoViaje.length]"
     [tiempoMax]="tiempoMax"
     [estadoViaje]="estadoViaje"
     [value]="vehicle"
     [nombreImagen]="vehicle">
     > 
     </app-trip>
-  }
+  </ng-container>
 </ion-accordion-group> 

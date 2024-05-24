@@ -13,11 +13,11 @@ export class TripComponent  implements OnInit {
 
   @Input({required: true}) nombreImagen!: string;
   @Input({required: true}) value!: string;
-  @Input({required: true}) tipoViaje!: string[];
+  @Input({required: true}) tipoViaje!: string;
   @Input({required: true}) tiempoMax!: string;
   @Input({required: true}) estadoViaje!: string[];
   @Input({required: true}) selected!: boolean;
-  @Input({required: true }) nombreUsuarios!: usuario[];
+  @Input({required: true }) nombreUsuarios!: usuario;
 
   constructor() { }
   ngOnInit() {}
@@ -30,4 +30,5 @@ export class TripComponent  implements OnInit {
 export interface usuario {
   name: string;
 }
+
 

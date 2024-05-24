@@ -19,7 +19,7 @@ export class TripsPage implements OnInit {
   public vehicles =['bike', 'e-bike', 'scooter'];
   public nombreUsuarios: usuario[] = [{name:'Alejandra'}, {name: 'Jorge'}, {name: 'Johan'}];
   public tiempoMax!: 'SALIDA' | 'LLEGADA';
-  public tipoViaje= ['INSTANTANEO', 'RESERVA', ''];
+  public tipoViaje = ['Instantáneo: ', 'Reserva: '];
   public estadoViaje = ['salida:'];
   public shouldShowEstadoViaje: boolean = true; // visibilidad de estadoViaje
 
@@ -40,7 +40,7 @@ export class TripsPage implements OnInit {
   }
 
   confirmArrivals() {
-    this.tipoViaje = ['INSTANTANEO', 'RESERVA'];
+    this.tipoViaje = ['Instantáneo: ', 'Reserva: '];
     this.tiempoMax = 'LLEGADA';
     this.shouldShowEstadoViaje = false; // esconde estadoViaje cuando oprime botón de llegadas
   }
@@ -53,5 +53,4 @@ this.selectedVehicle = vehicle;
 export interface usuario {
   name: string;
 }
-
 
