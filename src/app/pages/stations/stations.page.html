@@ -10,19 +10,27 @@
      <ion-menu-button></ion-menu-button> 
     </ion-buttons>
   </ion-toolbar>
-</ion-header>
+</ion-header> 
 
 <ion-content [fullscreen]="true">
   <ion-header class="header">
     <ion-toolbar class="ion-accordion">
-      <ion-segment class="buttons">
-        <ion-segment-button>
+      <ion-segment [(ngModel)]="segment" (ionChange)="segmentChanged($event)" class="buttons">
+        <ion-segment-button (click)="viewVehicles()" value="vehiculo" class="vehiculo">
           <ion-label>VEHÍCULOS</ion-label>
         </ion-segment-button>
-        <ion-segment-button >
+        <ion-segment-button (click)="viewStations()" value="estacion" class="estacion">
           <ion-label>ESTACIONES</ion-label>
         </ion-segment-button>
       </ion-segment>
     </ion-toolbar>
   </ion-header>
+<div id="ion-accordion"> 
+  <div *ngIf="segment === 'vehiculo'">
+  <app-catalogue-list (click)="viewVehicles()" [vehicles]="vehicles" (selectedVehicle)="selectVehicle($event)" [estadoViaje]="estadoViaje" [tipoViaje]="tipoViaje" [nombreUsuarios]="nombreUsuarios" [tiempoMax]="tiempoMax"></app-catalogue-list>
+  </div>
+  <div *ngIf="segment === 'estacion'"> 
+  <app-catalogue-list (click)="viewStations()"  [vehicles]="vehicles" (selectedVehicle)="selectVehicle($event)" [estadoViaje]="shouldShowEstadoViaje ? estadoViaje : []" [tipoViaje]="tipoViaje" [tiempoMax]="tiempoMax" [nombreUsuarios]="nombreUsuarios"></app-catalogue-list>
+  </div>
+</div>
 </ion-content>

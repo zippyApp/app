@@ -1,0 +1,47 @@
+<!--Aquí se crea cada tarjeta con los datos necesarios-->
+<ion-accordion [style]="{'--color-accordion':selected?'white':'black'}" [class.ion-accordion]="selected"  [value]="value">  
+  <ion-item slot="header"  [color]="'xd'" class="selected">
+  <ion-grid>
+    <ion-row class="ion-align-items-center wrapper" >
+      <ion-col>
+        <ion-img [class.ion-img-selected]="selected" [src]=" 'assets/vehicles-images/'+ nombreImagen +'.png'" alt=""></ion-img>
+      </ion-col> 
+      <ion-col>
+        <p class="align-center" [class.color-white]="selected">{{nombreUsuarios.name}}</p>     
+        <p class="align-center" [class.color-white]="selected">{{estadoViaje}}</p>
+        <p class="align-center" [class.color-white]="selected">{{tipoViaje}}</p>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  
+  </ion-item>
+  <div class="ion-padding" slot="content">
+    <ion-grid>
+      <ion-row ion-justify-content-around>
+        <ion-col class="align" size="6">
+          <p>
+            C.C:
+          </p>
+        </ion-col>
+          <ion-col class="align">
+           <p>
+            Destino:
+           </p>
+          </ion-col>
+      </ion-row>
+
+      <ion-row ion-justify-content-around>
+        <ion-col class="align" size="6">
+          <p>
+            Vehículo:
+          </p>
+        </ion-col>
+        <ion-col class="align">
+          <p>
+            {{ tiempoMax === 'SALIDA'? 'Abordar máx:':'Llegada máx:'}}
+          </p>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+</ion-accordion>
