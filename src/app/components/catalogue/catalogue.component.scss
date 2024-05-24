@@ -1,6 +1,6 @@
 ion-img{
-    width: 15vh;
-    height: 15vh;
+    width: 10vh;
+    height: 10vh;
     // mix-blend-mode: multiply;
     // background-color: transparent;
   }
@@ -16,7 +16,9 @@ ion-img{
   }
   
   .align-center{
-    text-align: center;
+    text-align: start;
+    justify-content: left;
+    align-items: start;
   }
 
   .align{

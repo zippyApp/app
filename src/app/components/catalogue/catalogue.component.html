@@ -1,5 +1,5 @@
 <!--Aquí se crea cada tarjeta con los datos necesarios-->
-<ion-accordion [style]="{'--color-accordion':selected?'white':'black'}" [class.ion-accordion]="selected"  [value]="value">  
+<ion-accordion toggleIcon="create-outline" [style]="{'--color-accordion':selected?'white':'black'}" [class.ion-accordion]="selected"  [value]="value">  
   <ion-item slot="header"  [color]="'xd'" class="selected">
   <ion-grid>
     <ion-row class="ion-align-items-center wrapper" >
@@ -7,9 +7,7 @@
         <ion-img [class.ion-img-selected]="selected" [src]=" 'assets/vehicles-images/'+ nombreImagen +'.png'" alt=""></ion-img>
       </ion-col> 
       <ion-col>
-        <p class="align-center" [class.color-white]="selected">{{nombreUsuarios.name}}</p>     
-        <p class="align-center" [class.color-white]="selected">{{estadoViaje}}</p>
-        <p class="align-center" [class.color-white]="selected">{{tipoViaje}}</p>
+        <p class="align-center" [class.color-white]="selected">{{nombreVehiculos.name}}</p>     
       </ion-col>
     </ion-row>
   </ion-grid>
@@ -20,26 +18,18 @@
       <ion-row ion-justify-content-around>
         <ion-col class="align" size="6">
           <p>
-            C.C:
+            Estado:
           </p>
         </ion-col>
-          <ion-col class="align">
-           <p>
-            Destino:
-           </p>
-          </ion-col>
       </ion-row>
-
       <ion-row ion-justify-content-around>
         <ion-col class="align" size="6">
           <p>
-            Vehículo:
+            Batería:
           </p>
         </ion-col>
-        <ion-col class="align">
-          <p>
-            {{ tiempoMax === 'SALIDA'? 'Abordar máx:':'Llegada máx:'}}
-          </p>
+        <ion-col class="align-center" size="6">
+          <span class="material-symbols-outlined">battery_4_bar</span>
         </ion-col>
       </ion-row>
     </ion-grid>

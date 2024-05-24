@@ -13,11 +13,8 @@ export class CatalogueComponent  implements OnInit {
   
   @Input({required: true}) nombreImagen!: string;
   @Input({required: true}) value!: string;
-  @Input({required: true}) tipoViaje!: string;
-  @Input({required: true}) tiempoMax!: string;
-  @Input({required: true}) estadoViaje!: string[];
   @Input({required: true}) selected!: boolean;
-  @Input({required: true }) nombreUsuarios!: usuario;
+  @Input({required: true }) nombreVehiculos!: vehiculo;
 
   constructor() { }
 
@@ -29,6 +26,6 @@ export class CatalogueComponent  implements OnInit {
 
 }
 
-export interface usuario {
+export interface vehiculo {
   name: string;
 }

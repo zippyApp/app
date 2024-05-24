@@ -4,10 +4,7 @@
   <ng-container *ngFor="let vehicle of vehicles; let i = index;">
     <app-catalogue 
     [selected]="valueSelected === vehicle"
-    [nombreUsuarios]="nombreUsuarios[i]"
-    [tipoViaje]="tipoViaje[i % tipoViaje.length]"
-    [tiempoMax]="tiempoMax"
-    [estadoViaje]="estadoViaje"
+    [nombreVehiculos]="nombreVehiculos[i]"
     [value]="vehicle"
     [nombreImagen]="vehicle">
     > 

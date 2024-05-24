@@ -35,17 +35,17 @@
   /* Material Design styles */
   .segment-button-checked.vehiculo.md::ng-deep{
     color: #000000;
-    background-color: #fcf73b;
+    background-color: #eee987;
   }
   .segment-button-checked.estacion.md::ng-deep{
     color: #000000;
-    background-color: #fcf73b;
+    background-color: #eee987;
   }
   .segment-button-checked-md::ng-deep, .vehiculo{
-    --indicator-color: #ceba08;
+    --indicator-color: #fbef00;
   }
   .segment-button-checked-md::ng-deep, .estacion{
-    --indicator-color: #ceba08;
+    --indicator-color: #fbef00;
   }
   .segment-button.md::ng-deep, .vehiculo {
     color: #757475;

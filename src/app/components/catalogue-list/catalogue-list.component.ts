@@ -14,15 +14,9 @@ export class CatalogueListComponent  implements OnInit {
   
   @ViewChild('accordion') accordion?: IonAccordionGroup;
 
-  @Input({required: true}) tipoViaje!: string[];
-
-  @Input({required: true}) estadoViaje!: string[];
-
-  @Input({required: true}) tiempoMax!: 'SALIDA' | 'LLEGADA';
-
   @Input({required : true}) vehicles!: string[];
 
-  @Input({required: true }) nombreUsuarios!: usuario[];
+  @Input({required: true }) nombreVehiculos!: vehiculo[];
 
   @Output() selectedVehicle = new EventEmitter<string | string[] | null>();
 
@@ -40,7 +34,7 @@ export class CatalogueListComponent  implements OnInit {
 
 
 }
-export interface usuario {
+export interface vehiculo {
   name: string;
 }
 

@@ -18,43 +18,31 @@ import { CatalogueListComponent } from 'src/app/components/catalogue-list/catalo
 })
 export class StationsPage implements OnInit {
   
-  segment: string = 'salidas'; 
+  segment: string = 'vehiculo'; 
   selectedVehicle?: string | string[]  | null;
   
-  public vehicles =['bike', 'e-bike', 'scooter'];
-  public nombreUsuarios: usuario[] = [{name:'Alejandra'}, {name: 'Jorge'}, {name: 'Johan'}];
-  public tiempoMax!: 'SALIDA' | 'LLEGADA';
-  public tipoViaje = ['Instantáneo: ', 'Reserva: '];
-  public estadoViaje = ['salida:'];
-  public shouldShowEstadoViaje: boolean = true; // visibilidad de estadoViaje
+  public vehicles =['bike', 'e-bike', 'scooter', 'bike2', 'e-scooter'];
+  public nombreVehiculos = [{name:'Vehículo 1234'}, {name:'Vehículo 1528'}, {name: 'Vehículo 1835'}, {name:'Vehículo 2307'}, {name:'Vehículo 2269'}];
 
   @ViewChild('select') select?: any;
 
   constructor() { }
 
   ngOnInit() {
-    this.tipoViaje = [''];
   } 
 
   segmentChanged(event: any) {
     this.segment = event.detail.value;
   }
+
   viewVehicles() {
-    this.tipoViaje = [''];
-    this.tiempoMax = 'SALIDA';
   }
 
-  viewStations() {
-    this.tipoViaje = ['Instantáneo: ', 'Reserva: '];
-    this.tiempoMax = 'LLEGADA';
-    this.shouldShowEstadoViaje = false; // esconde estadoViaje cuando oprime botón de llegadas
+  selectVehicle(vehicle:string | string[] | null){
+  this.selectedVehicle = vehicle;
   }
 
-selectVehicle(vehicle:string | string[] | null){
-this.selectedVehicle = vehicle;
 }
-
-}
-export interface usuario {
+export interface vehiculo {
   name: string;
 }
