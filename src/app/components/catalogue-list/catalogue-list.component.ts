@@ -32,7 +32,6 @@ export class CatalogueListComponent  implements OnInit {
     this.selectedVehicle.emit(this.valueSelected);
   }
 
-
 }
 export interface vehiculo {
   name: string;

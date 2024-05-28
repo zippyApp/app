@@ -19,6 +19,7 @@ import { CatalogueListComponent } from 'src/app/components/catalogue-list/catalo
 export class StationsPage implements OnInit {
   
   segment: string = 'vehiculo'; 
+
   selectedVehicle?: string | string[]  | null;
   
   public vehicles =['bike', 'e-bike', 'scooter', 'bike2', 'e-scooter'];

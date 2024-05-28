@@ -16,21 +16,21 @@
   <div class="ion-padding" slot="content">
     <ion-grid>
       <ion-row ion-justify-content-around>
-        <ion-col class="align" size="6">
+        <ion-col class="align" size="7">
           <p>
-            Estado:
+            Estado: {{selectedOption}}
           </p>
         </ion-col>
+        <ion-button class="editar" size="small" (click)="presentInput()">  <ion-icon slot="start" name="pencil-outline"></ion-icon>Editar</ion-button>
       </ion-row>
       <ion-row ion-justify-content-around>
-        <ion-col class="align" size="6">
+        <ion-col class="align" size="3">
           <p>
             Batería:
           </p>
         </ion-col>
-        <ion-col class="align-center" size="6">
-          <span class="material-symbols-outlined">battery_4_bar</span>
-        </ion-col>
+        <ion-icon class="battery" name="battery-half-outline"></ion-icon>
+        <ion-button class="editar2" size="small" (click)="presentInput()"><ion-icon slot="start" name="pencil-outline"></ion-icon>Editar</ion-button>
       </ion-row>
     </ion-grid>
   </div>

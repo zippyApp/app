@@ -19,6 +19,7 @@ export class TripComponent  implements OnInit {
   @Input({required: true}) selected!: boolean;
   @Input({required: true }) nombreUsuarios!: usuario;
 
+
   constructor() { }
   ngOnInit() {}
 

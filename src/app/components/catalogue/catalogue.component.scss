@@ -14,6 +14,22 @@ ion-img{
   .wrapper{
     width: 100%;
   }
+
+  .editar{
+    padding-bottom: 15px;
+    margin-left: 40px;
+    --color: #011629;
+    --background: #3482db;
+    font-weight: bold;
+  }
+
+  .editar2{
+    padding-bottom: 15px;
+    margin-left: 123px;
+    --color: #011629;
+    --background: #3482db;
+    font-weight: bold;
+  }
   
   .align-center{
     text-align: start;
@@ -43,7 +59,12 @@ ion-img{
   p{
     margin: 0px 0px 0px 0px;
   }
+
+  .battery{
+    font-size: 24px; 
+  }
   
+
   .ion-accordion{
     color: white;
     background-color: #011629 !important;
