@@ -15,7 +15,7 @@ ion-img{
     width: 100%;
   }
 
-  .editar{
+  .editarEstado{
     padding-bottom: 15px;
     margin-left: 40px;
     --color: #011629;
@@ -23,9 +23,17 @@ ion-img{
     font-weight: bold;
   }
 
-  .editar2{
+  .editarBateria.md{
     padding-bottom: 15px;
-    margin-left: 123px;
+    margin-left: 68px;
+    --color: #011629;
+    --background: #3482db;
+    font-weight: bold;
+  }
+
+  .editarBateria.ios{
+    padding-bottom: 15px;
+    margin-left: 80px;
     --color: #011629;
     --background: #3482db;
     font-weight: bold;

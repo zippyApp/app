@@ -5,15 +5,14 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class StorageService {
-  private storageKey = 'selectedOption';
-
   constructor() {}
 
-  setValue(value: string): void {
-    localStorage.setItem(this.storageKey, value);
+  setValue(id: string, value: string): void {
+    localStorage.setItem(id, value);
   }
 
-  getValue(): string {
-    return localStorage.getItem(this.storageKey) || '';
+  getValue(id: string): string {
+    return localStorage.getItem(id) || '';
   }
+
 }

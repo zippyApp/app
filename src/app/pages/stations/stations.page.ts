@@ -23,7 +23,7 @@ export class StationsPage implements OnInit {
   selectedVehicle?: string | string[]  | null;
   
   public vehicles =['bike', 'e-bike', 'scooter', 'bike2', 'e-scooter'];
-  public nombreVehiculos = [{name:'Vehículo 1234'}, {name:'Vehículo 1528'}, {name: 'Vehículo 1835'}, {name:'Vehículo 2307'}, {name:'Vehículo 2269'}];
+  public nombreVehiculos = [{id: 'vehicle1', name:'Vehículo 1234'}, {id: 'vehicle2', name:'Vehículo 1528'}, {id:'vehicle3', name: 'Vehículo 1835'}, {id:'vehicle4', name:'Vehículo 2307'}, {id:'vehicle5', name:'Vehículo 2269'}];
 
   @ViewChild('select') select?: any;
 
@@ -46,4 +46,5 @@ export class StationsPage implements OnInit {
 }
 export interface vehiculo {
   name: string;
+  id: string;
 }

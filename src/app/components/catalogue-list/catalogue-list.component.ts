@@ -35,6 +35,7 @@ export class CatalogueListComponent  implements OnInit {
 }
 export interface vehiculo {
   name: string;
+  id: string;
 }
 
 
