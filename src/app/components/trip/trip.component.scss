@@ -1,0 +1,64 @@
+ion-img{
+    width: 15vh;
+    height: 15vh;
+    // mix-blend-mode: multiply;
+    // background-color: transparent;
+  }
+
+  .ion-img-selected{
+    width: 10vh;
+    height: 10vh;
+    filter: invert(100%);
+  }
+  
+  .wrapper{
+    width: 100%;
+  }
+  
+  .align-center{
+    text-align: center;
+  }
+
+  .align{
+    text-align: left;
+    margin-bottom: 20px;
+  }
+  
+  .color-white{
+    color: #ffffff;
+  }
+
+  .d-flex{
+    display: flex;
+    justify-content: center;
+  }
+  
+  .d-flex-end{
+    display: flex;
+    justify-content: flex-end;
+  }
+  
+  p{
+    margin: 0px 0px 0px 0px;
+  }
+  
+  .ion-accordion{
+    color: white;
+    background-color: #011629 !important;
+  } 
+  
+  :host ::ng-deep ion-icon.ion-accordion-toggle-icon {
+    color: #011629;
+  }
+
+  /*redondear tarjetas*/
+  ion-accordion{
+    border-radius: 2rem;
+    border-bottom: 3px solid #7a7c7e; 
+    border-top: 3px solid #7a7c7e; 
+    border-right: 3px solid #7a7c7e; 
+    border-left: 3px solid #7a7c7e; 
+  }
+
+  
+  

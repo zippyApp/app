@@ -1,0 +1,45 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title><b>Zippy</b></ion-title>
+    <ion-buttons slot="start">
+      <img src="assets\icon\scooter.png" width="40px" style="display:inline-block" height="40px" />
+    </ion-buttons>
+    <ion-buttons slot="start">
+    </ion-buttons>
+    <ion-buttons slot="end">
+     <ion-menu-button></ion-menu-button> 
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header class="header">
+    <ion-toolbar class="ion-accordion">
+      <ion-segment [(ngModel)]="segment" (ionChange)="segmentChanged($event)" class="buttons">
+        <ion-segment-button (click)="confirmDepartures()" value="salidas" class="salidas">
+          <ion-label>SALIDAS</ion-label>
+        </ion-segment-button>
+        <ion-segment-button (click)="confirmArrivals()" value="llegadas" class="llegadas">
+          <ion-label>LLEGADAS</ion-label>
+        </ion-segment-button>
+      </ion-segment>
+    </ion-toolbar>
+  </ion-header>
+<div id="ion-accordion"> 
+<div *ngIf="segment === 'salidas'">
+<app-trip-list (click)="confirmDepartures()" [vehicles]="vehicles" (selectedVehicle)="selectVehicle($event)" [estadoViaje]="estadoViaje" [tipoViaje]="tipoViaje" [nombreUsuarios]="nombreUsuarios" [tiempoMax]="tiempoMax"></app-trip-list>
+
+<div class="confirmar">
+  <ion-fab-button class="confirm-button" [activated]="!selectedVehicle" [disabled]="!selectedVehicle">Confirmar salida</ion-fab-button>
+</div>
+</div>
+
+<div *ngIf="segment === 'llegadas'"> 
+<app-trip-list (click)="confirmArrivals()"  [vehicles]="vehicles" (selectedVehicle)="selectVehicle($event)" [estadoViaje]="shouldShowEstadoViaje ? estadoViaje : []" [tipoViaje]="tipoViaje" [tiempoMax]="tiempoMax" [nombreUsuarios]="nombreUsuarios"></app-trip-list>
+
+<div class="confirmar">
+  <ion-fab-button class="confirm-button" [activated]="!selectedVehicle" [disabled]="!selectedVehicle">Terminar viaje</ion-fab-button>
+</div>
+</div>
+</div>
+</ion-content>

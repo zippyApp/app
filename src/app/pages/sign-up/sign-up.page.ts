@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormGroup, FormControl, Validators } from '@angular/forms';
-import { IonContent, IonHeader, IonTitle, IonToolbar, IonButton, IonIcon, IonItem, IonList, IonSelect, IonSelectOption} from '@ionic/angular/standalone';
+import { IonContent, IonHeader, IonTitle, IonToolbar, IonMenu, IonButton, IonIcon, IonItem, IonList, IonSelect, IonSelectOption} from '@ionic/angular/standalone';
 import { HeaderComponent } from '../../components/header/header.component';
 import { CustomInputComponent } from '../../components/custom-input/custom-input.component';
 import { RouterLink } from '@angular/router';
+import { MenuController } from '@ionic/angular';
+
 @Component({
   selector: 'app-sign-up',
   templateUrl: './sign-up.page.html',
@@ -16,6 +18,7 @@ import { RouterLink } from '@angular/router';
     IonContent,
     IonHeader,
     IonTitle, 
+    IonMenu,
     IonToolbar,
     IonButton,
     IonIcon,
@@ -35,8 +38,14 @@ export class SignUpPage implements OnInit {
     phone_number: new FormControl('', [Validators.required, Validators.pattern('^[0-9]{10}$')])
   });
 
-  constructor() { }
+  constructor(private menu: MenuController) { }
+  ionViewWillEnter() {
+    this.menu.enable(false, 'menu-id'); 
+  }
 
+  ionViewWillLeave() {
+    this.menu.enable(true, 'menu-id');
+  }
   ngOnInit() {
   }
 

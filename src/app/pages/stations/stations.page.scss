@@ -1,0 +1,80 @@
+#ion-accordion{
+    background-color: rgb(255, 255, 255)!important;
+    height: 100%;
+  }
+  
+  .vehiculo, .estacion {
+      justify-content: center;
+      width: 50%;
+      text-align: center;
+      font-weight: 900;
+      flex: 1;
+    }
+    .buttons.md{
+      display: flex;
+      width: 100%;
+      height: 10px;
+    }
+    .header.md {
+      display: flex;
+      height: 3em;
+      padding: 0;
+    }
+    .header.ios {
+      display: flex;
+      height: 2.2em;
+      margin-right: 20em;
+    }
+    .buttons.ios{
+      display: flex;
+      width: 300%;
+      padding-right: 0;
+      padding-left: 0;
+      padding-bottom: 100px;
+    }
+  /* Material Design styles */
+  .segment-button-checked.vehiculo.md::ng-deep{
+    color: #000000;
+    background-color: #fff75e;
+  }
+  .segment-button-checked.estacion.md::ng-deep{
+    color: #000000;
+    background-color: #fff75e;
+  }
+  .segment-button-checked-md::ng-deep, .vehiculo{
+    --indicator-color: #fbef00;
+  }
+  .segment-button-checked-md::ng-deep, .estacion{
+    --indicator-color: #fbef00;
+  }
+  .segment-button.md::ng-deep, .vehiculo {
+    color: #757475;
+    height: 2px;
+  }
+  .segment-button.md::ng-deep, .estacion {
+    color: #757475;
+    height: 2px;
+  }
+  /* iOS styles */
+  .vehiculo.ios {
+      background-color:  #c0c7c5;
+      color:  #000000;
+      --indicator-color : #fff75e!important;
+      flex-grow: 1; 
+      text-align: center; 
+      font-size: 15px;
+      font-weight: bold;
+  }
+  
+  .estacion.ios {
+      background-color:  #c0c7c5;
+      color:  #000000;
+      --indicator-color : #fff75e!important;
+      flex-grow: 1; 
+      text-align: center; 
+      font-size: 15px;
+      font-weight: bold;
+  }
+  
+  
+  

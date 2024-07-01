@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormGroup, FormControl, Validators } from '@angular/forms';
-import { IonContent, IonHeader, IonTitle, IonToolbar, IonButton, IonIcon, IonItem, IonList, IonSelect, IonSelectOption} from '@ionic/angular/standalone';
+import { IonContent, IonHeader, IonTitle, IonToolbar, IonMenu, IonButton, IonIcon, IonItem, IonList, IonSelect, IonSelectOption} from '@ionic/angular/standalone';
 import { HeaderComponent } from '../../components/header/header.component';
 import { CustomInputComponent } from '../../components/custom-input/custom-input.component';
+import { MenuController } from '@ionic/angular';
 
 @Component({
   selector: 'app-reference',
@@ -18,7 +19,7 @@ import { CustomInputComponent } from '../../components/custom-input/custom-input
     IonToolbar,
     IonButton,
     IonIcon,
-    CustomInputComponent, HeaderComponent, IonItem, IonList, IonSelect, IonSelectOption]
+    CustomInputComponent, HeaderComponent, IonMenu, IonItem, IonList, IonSelect, IonSelectOption]
 })
 export class ReferencePage implements OnInit {
   form: FormGroup = new FormGroup({
@@ -30,8 +31,14 @@ export class ReferencePage implements OnInit {
     phone_number: new FormControl('', [Validators.required, Validators.pattern('^[0-9]{10}$')])
   });
 
-  constructor() { }
+  constructor(private menu: MenuController) { }
+  ionViewWillEnter() {
+    this.menu.enable(false, 'menu-id'); 
+  }
 
+  ionViewWillLeave() {
+    this.menu.enable(true, 'menu-id');
+  }
   ngOnInit() {
   }
 

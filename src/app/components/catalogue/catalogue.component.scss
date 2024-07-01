@@ -1,0 +1,92 @@
+ion-img{
+    width: 10vh;
+    height: 10vh;
+    // mix-blend-mode: multiply;
+    // background-color: transparent;
+  }
+
+  .ion-img-selected{
+    width: 10vh;
+    height: 10vh;
+    filter: invert(100%);
+  }
+  
+  .wrapper{
+    width: 100%;
+  }
+
+  .editarEstado{
+    padding-bottom: 15px;
+    margin-left: 40px;
+    --color: #011629;
+    --background: #ffffff;
+  }
+
+  .editarBateria.md{
+    padding-bottom: 15px;
+    margin-left: 68px;
+    --color: #011629;
+    --background: #ffffff;
+  }
+
+  .editarBateria.ios{
+    padding-bottom: 15px;
+    margin-left: 80px;
+    --color: #011629;
+    --background: #ffffff;
+  }
+  
+  .align-center{
+    text-align: start;
+    justify-content: left;
+    align-items: start;
+  }
+
+  .align{
+    text-align: left;
+    margin-bottom: 20px;
+  }
+  
+  .color-white{
+    color: #ffffff;
+  }
+
+  .d-flex{
+    display: flex;
+    justify-content: center;
+  }
+  
+  .d-flex-end{
+    display: flex;
+    justify-content: flex-end;
+  }
+  
+  p{
+    margin: 0px 0px 0px 0px;
+  }
+
+  .battery{
+    font-size: 24px; 
+  }
+  
+
+  .ion-accordion{
+    color: white;
+    background-color: #011629 !important;
+  } 
+  
+  :host ::ng-deep ion-icon.ion-accordion-toggle-icon {
+    color: #011629;
+  }
+
+  /*redondear tarjetas*/
+  ion-accordion{
+    border-radius: 2rem;
+    border-bottom: 3px solid #7a7c7e; 
+    border-top: 3px solid #7a7c7e; 
+    border-right: 3px solid #7a7c7e; 
+    border-left: 3px solid #7a7c7e; 
+  }
+
+  
+  

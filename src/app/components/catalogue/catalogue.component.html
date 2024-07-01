@@ -1,0 +1,37 @@
+<!--Aquí se crea cada tarjeta con los datos necesarios-->
+<ion-accordion toggleIcon="create-outline" [style]="{'--color-accordion':selected?'white':'black'}" [class.ion-accordion]="selected"  [value]="value">  
+  <ion-item slot="header"  [color]="'xd'" class="selected">
+  <ion-grid>
+    <ion-row class="ion-align-items-center wrapper" >
+      <ion-col>
+        <ion-img [class.ion-img-selected]="selected" [src]=" 'assets/vehicles-images/'+ nombreImagen +'.png'" alt=""></ion-img>
+      </ion-col> 
+      <ion-col>
+        <p class="align-center" [class.color-white]="selected">{{nombreVehiculos.name}}</p>     
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  
+  </ion-item>
+  <div class="ion-padding" slot="content">
+    <ion-grid>
+      <ion-row ion-justify-content-around>
+        <ion-col class="align" size="7">
+          <p>
+            Estado: {{selectedOption}}
+          </p>
+        </ion-col>
+        <ion-button shape="round" class="editarEstado" size="small" (click)="presentInput()">  <ion-icon slot="icon-only" name="pencil-outline"></ion-icon></ion-button>
+      </ion-row>
+      <ion-row ion-justify-content-around>
+        <ion-col class="align" size="5">
+          <p>
+            Batería: {{ selectedNumber }} %
+          </p>
+        </ion-col>
+        <ion-icon class="battery" name="battery-half-outline"></ion-icon>
+        <ion-button shape="round" class="editarBateria" size="small" (click)="presentBattery()"><ion-icon slot="icon-only" name="pencil-outline"></ion-icon></ion-button>
+      </ion-row>
+    </ion-grid>
+  </div>
+</ion-accordion>
