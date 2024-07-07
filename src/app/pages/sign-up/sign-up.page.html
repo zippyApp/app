@@ -1,127 +1,237 @@
 <app-header backButton="/auth" [showBackText]="false" title='Registro'></app-header>
 <ion-menu side="end" contentId="main-content" menuId="menu-id" class="menu-hidden"></ion-menu>
-<ion-content >
-    <div class="d-flex-center">
-        <form [formGroup]="form" class="auth-form" (ngSubmit)="submit()" (keypress.enter)="submit">
-            <!--  <app-logo></app-logo>-->
- 
-            <!-- ================== Name ==================--> 
-            <app-custom-input
-            autocomplete="first_names" 
-            icon="person-outline"
-            [control] ="form.controls['first_names']"
-            type="text" 
-            label="Nombres" 
-            ></app-custom-input>
+<ion-content>
+  <div class="d-flex-center">
+    <form [formGroup]="form" class="auth-form" (ngSubmit)="submit()" (keypress.enter)="submit">
+      <!--  <app-logo></app-logo>-->
+      <ng-container *ngIf="isFirstSection">
+        <!-- ================== Name ==================-->
+        <app-custom-input autocomplete="firstNames" icon="person-outline" [control]="form.controls['firstNames']"
+          type="text" label="Nombres"></app-custom-input>
 
-            <div class="validators" *ngIf="form.controls['first_names'].errors && form.controls['first_names'].touched">
-                <div *ngIf="form.controls['first_names'].errors?.['required']">Debe ingresar al menos un nombre</div>
-                <div *ngIf="form.controls['first_names'].errors?.['minlength']">El nombre debe tener 4 caracteres</div>
+        <div class="validators" *ngIf="form.controls['firstNames'].errors && form.controls['firstNames'].touched">
+          <div *ngIf="form.controls['firstNames'].errors?.['required']">Debe ingresar al menos un nombre</div>
+          <div *ngIf="form.controls['firstNames'].errors?.['minlength']">El nombre debe tener 4 caracteres</div>
+        </div>
+        <!-- ================== Last Name ==================-->
+        <app-custom-input autocomplete="lastNames" icon="person-outline" [control]="form.controls['lastNames']"
+          type="text" label="Apellidos"></app-custom-input>
+
+        <div class="validators" *ngIf="form.controls['lastNames'].errors && form.controls['lastNames'].touched">
+          <div *ngIf="form.controls['lastNames'].errors?.['required']">Debe ingresar al menos un apellido</div>
+          <div *ngIf="form.controls['lastNames'].errors?.['minlength']">El apellido debe tener 4 caracteres</div>
+        </div>
+        <!-- ================== Type Document ==================-->
+        <ion-list color="primary">
+          <ion-item [class.invalid]="form.controls['type'].errors && form.controls['type'].touched">
+            <ion-select formControlName="type" interface="action-sheet" label="Tipo de documento" value="1">
+              <ion-select-option value="1">CC</ion-select-option>
+              <ion-select-option value="2">CE</ion-select-option>
+              <ion-select-option value="3">TI</ion-select-option>
+              <ion-select-option value="4">P</ion-select-option>
+            </ion-select>
+          </ion-item>
+        </ion-list>
+
+        <div class="validators" *ngIf="form.controls['type'].errors && form.controls['type'].touched">
+          <div *ngIf="form.controls['type'].errors?.['required']">Debe selccionar un tipo de documento</div>
+        </div>
+
+        <!-- ================== Document ==================-->
+        <app-custom-input autocomplete="number" icon="card-outline" [control]="form.controls['number']" type="number"
+          label="Número" maxlength="10"></app-custom-input>
+
+        <div class="validators" *ngIf="form.controls['number'].errors && form.controls['number'].touched">
+          <div *ngIf="form.controls['number'].errors?.['required']">El documento es requerido</div>
+          <div *ngIf="form.controls['number'].errors?.['minlength']">El documento debe tener entre 8 y 10 números</div>
+        </div>
+        <!-- ================== Birthday ==================-->
+        <ion-item style="display: flex; flex-direction: column;">
+          <ion-icon slot="start" name="calendar-outline"></ion-icon>
+          <ion-input  formControlName="birthDate" readonly (click)="openDatePicker()" label="Fecha de Nacimiento"
+            value="{{ form.controls['birthDate'].value | date: 'dd/MM/yyyy' }}"></ion-input>
+        </ion-item>
+
+        <div class="validators" *ngIf="form.controls['birthDate'].errors && form.controls['birthDate'].touched">
+          <div *ngIf="form.controls['birthDate'].errors?.['required']">Ingrese su fecha de nacimiento</div>
+          <div *ngIf="form.controls['birthDate'].errors?.['pattern']">Formato de fecha inválido</div>
+        </div>
+
+        <!-- Modal para ion-datetime -->
+        <ion-modal [isOpen]="isDatePickerOpen" (ionModalDidDismiss)="closeDatePicker()">
+          <ng-template>
+            <ion-content class="ion-padding" fullscreen>
+              <div class="modal-content">
+                <ion-datetime locale="es-ES" [value]="form.controls['birthDate'].value" (ionChange)="setDate($event)"
+                  display-format="DD/MM/YYYY" placeholder="Seleccione Fecha" presentation="date">
+                </ion-datetime>
+                <ion-button expand="block" (click)="isDatePickerOpen = false">Cerrar</ion-button>
+              </div>
+            </ion-content>
+          </ng-template>
+        </ion-modal>
+
+
+
+        <!-- ================== occupation ==================-->
+        <app-custom-input autocomplete="occupation" icon="bag-outline" [control]="form.controls['occupation']"
+          type="text" label="Ocupación"></app-custom-input>
+
+        <div class="validators" *ngIf="form.controls['occupation'].errors && form.controls['occupation'].touched">
+          <div *ngIf="form.controls['occupation'].errors?.['required']">Ingrese su ocupación</div>
+          <div *ngIf="form.controls['occupation'].errors?.['minlength']">Debe llenar este campo</div>
+        </div>
+
+        <!-- ================== Email ==================-->
+
+        <app-custom-input autocomplete="email" icon="mail-outline" [control]="form.controls['email']" type="email"
+          label="Correo"></app-custom-input>
+
+        <div class="validators" *ngIf="form.controls['email'].errors && form.controls['email'].touched">
+          <div *ngIf="form.controls['email'].errors?.['required']">El correo es requerido</div>
+          <div *ngIf="form.controls['email'].errors?.['email']">Ingresa un correo válido</div>
+        </div>
+
+        <!-- ================== Phone ==================-->
+        <app-custom-input autocomplete="phone" icon="call-outline" [control]="form.controls['phone']" type="number"
+          label="Celular" maxlength="10"></app-custom-input>
+
+        <div class="validators" *ngIf="form.controls['phone'].errors && form.controls['phone'].touched">
+          <div *ngIf="form.controls['phone'].errors?.['required']">El celular es requerido</div>
+          <div *ngIf="form.controls['phone'].errors?.['minlength']">El celular debe tener 10 números</div>
+        </div>
+
+        <!-- ================== Password ==================-->
+        <!--{{form.value.email}}-->
+        <app-custom-input icon="lock-closed-outline" [control]="form.controls['password']" type="password"
+          label="Contraseña"></app-custom-input>
+        <!--{{form.value | json}}-->
+        <div class="validators" *ngIf="form.controls['password'].errors && form.controls['password'].touched">
+          <div *ngIf="form.controls['password'].errors?.['required']">La contraseña es requerida</div>
+        </div>
+
+        <!--======================= Card Image user ========================-->
+
+        <div class="d-flex-center">
+          <div class="image-container">
+            <div>
+              <h3>Cara frontal de su documento</h3>
             </div>
-            <!-- ================== Last Name ==================--> 
-            <app-custom-input
-            autocomplete="last_names" 
-            icon="person-outline"
-            [control] ="form.controls['last_names']"
-            type="text" 
-            label="Apellidos" 
-            ></app-custom-input>
-
-            <div class="validators" *ngIf="form.controls['last_names'].errors && form.controls['last_names'].touched">
-                <div *ngIf="form.controls['last_names'].errors?.['required']">Debe ingresar al menos un apellido</div>
-                <div *ngIf="form.controls['last_names'].errors?.['minlength']">El apellido debe tener 4 caracteres</div>
+            <div class="image-box" (click)="cardImage('frontal', 'user')">
+              <ion-icon name="card-outline" *ngIf="!frontImage" style="font-size: 100px; color: #01192f;"></ion-icon>
+              <img *ngIf="frontImage" [src]="frontImage" />
             </div>
-            <!-- ================== Type Document ==================--> 
-            <ion-list color="primary">          
-              <ion-item [class.invalid]="form.controls['document_type'].errors && form.controls['document_type'].touched">
-                <ion-select formControlName="document_type" interface="action-sheet" label="Tipo de documento">
-                  <ion-select-option value="CC">CC</ion-select-option>
-                  <ion-select-option value="CE">CE</ion-select-option>
-                  <ion-select-option value="TI">TI</ion-select-option>
-                  <ion-select-option value="P">P</ion-select-option>
-                </ion-select>
-              </ion-item>
-            </ion-list>
-
-            <div class="validators" *ngIf="form.controls['document_type'].errors && form.controls['document_type'].touched">
-              <div *ngIf="form.controls['document_type'].errors?.['required']">Debes selccionar un tipo de documento</div>
+            <div>
+              <h3>Cara posterior de su documento</h3>
+            </div>
+            <div class="image-box" (click)="cardImage('posterior', 'user')">
+              <ion-icon name="card-outline" *ngIf="!backImage" style="font-size: 100px; color: #01192f;"></ion-icon>
+              <img *ngIf="backImage" [src]="backImage" />
+            </div>
           </div>
+        </div>
+        
 
-            <!-- ================== Document ==================--> 
-            <app-custom-input
-            autocomplete="document" 
-            icon="card-outline"
-            [control] ="form.controls['document']"
-            type="number" 
-            label="Documento"
-            maxlength="10" 
-            ></app-custom-input>
 
-            <div class="validators" *ngIf="form.controls['document'].errors && form.controls['document'].touched">
-                <div *ngIf="form.controls['document'].errors?.['required']">El documento es requerido</div>
-                <div *ngIf="form.controls['document'].errors?.['minlength']">El documento debe tener entre 8 y 10 números</div>
+
+        <ion-button expand="block" mode="ios" class="submit" (click)="goToSecondSection()">
+          Continuar
+          <ion-icon slot="end" name="arrow-forward-outline"></ion-icon>
+        </ion-button>
+      </ng-container>
+
+      <!-- Sección 2 -->
+      <ng-container *ngIf="!isFirstSection">
+        <!--===================REFERENCE==============================================-->
+        <!-- ================== Name ==================-->
+        <app-custom-input autocomplete="firstNamesRef" icon="person-outline" [control]="form.controls['firstNamesRef']"
+          type="text" label="Nombres"></app-custom-input>
+
+        <div class="validators" *ngIf="form.controls['firstNamesRef'].errors && form.controls['firstNamesRef'].touched">
+          <div *ngIf="form.controls['firstNamesRef'].errors?.['required']">Debe ingresar al menos un nombre</div>
+          <div *ngIf="form.controls['firstNamesRef'].errors?.['minlength']">El nombre debe tener 4 caracteres</div>
+        </div>
+        <!-- ================== Last Name ==================-->
+        <app-custom-input autocomplete="lastNamesRef" icon="person-outline" [control]="form.controls['lastNamesRef']"
+          type="text" label="Apellidos"></app-custom-input>
+
+        <div class="validators" *ngIf="form.controls['lastNamesRef'].errors && form.controls['lastNamesRef'].touched">
+          <div *ngIf="form.controls['lastNamesRef'].errors?.['required']">Debe ingresar al menos un apellido</div>
+          <div *ngIf="form.controls['lastNamesRef'].errors?.['minlength']">El apellido debe tener 4 caracteres</div>
+        </div>
+        <!-- ================== Type Document ==================-->
+        <ion-list color="primary">
+          <ion-item [class.invalid]="form.controls['typeRef'].errors && form.controls['typeRef'].touched">
+            <ion-select formControlName="typeRef" interface="action-sheet" label="Tipo de documento">
+              <ion-select-option value="1">CC</ion-select-option>
+              <ion-select-option value="2">CE</ion-select-option>
+              <ion-select-option value="3">TI</ion-select-option>
+              <ion-select-option value="4">P</ion-select-option>
+            </ion-select>
+          </ion-item>
+        </ion-list>
+
+        <div class="validators" *ngIf="form.controls['typeRef'].errors && form.controls['typeRef'].touched">
+          <div *ngIf="form.controls['typeRef'].errors?.['required']">Debe selccionar un tipo de documento</div>
+        </div>
+
+        <!-- ================== Document ==================-->
+        <app-custom-input autocomplete="numberRef" icon="card-outline" [control]="form.controls['numberRef']"
+          type="number" label="Número" maxlength="10"></app-custom-input>
+
+        <div class="validators" *ngIf="form.controls['numberRef'].errors && form.controls['numberRef'].touched">
+          <div *ngIf="form.controls['numberRef'].errors?.['required']">El documento es requerido</div>
+          <div *ngIf="form.controls['numberRef'].errors?.['minlength']">El documento debe tener entre 8 y 10 números
+          </div>
+        </div>
+
+        <!-- ================== Email ==================-->
+
+        <app-custom-input autocomplete="emailRef" icon="mail-outline" [control]="form.controls['emailRef']" type="email"
+          label="Correo"></app-custom-input>
+
+        <div class="validators" *ngIf="form.controls['emailRef'].errors && form.controls['emailRef'].touched">
+          <div *ngIf="form.controls['emailRef'].errors?.['required']">El correo es requerido</div>
+          <div *ngIf="form.controls['emailRef'].errors?.['email']">Ingresa un correo válido</div>
+        </div>
+
+        <!-- ================== Phone ==================-->
+        <app-custom-input autocomplete="phoneRef" icon="call-outline" [control]="form.controls['phoneRef']"
+          type="number" label="Celular" maxlength="10"></app-custom-input>
+
+        <div class="validators" *ngIf="form.controls['phoneRef'].errors && form.controls['phoneRef'].touched">
+          <div *ngIf="form.controls['phoneRef'].errors?.['required']">El celular es requerido</div>
+          <div *ngIf="form.controls['phoneRef'].errors?.['minlength']">El celular debe tener 10 números</div>
+        </div>
+
+        <!--======================= Card Image reference========================-->
+
+        <div class="d-flex-center">
+          <div class="image-container">
+            <div>
+              <h3>Cara frontal de su documento</h3>
             </div>
-            <!-- ================== occupation ==================--> 
-            <app-custom-input
-            autocomplete="occupation" 
-            icon="bag-outline"
-            [control] ="form.controls['occupation']"
-            type="text" 
-            label="Ocupación" 
-            ></app-custom-input>
-
-            <div class="validators" *ngIf="form.controls['occupation'].errors && form.controls['occupation'].touched">
-                <div *ngIf="form.controls['occupation'].errors?.['required']">Ingrese su ocupación</div>
-                <div *ngIf="form.controls['occupation'].errors?.['minlength']">Debe llenar este campo</div>
+            <div class="image-box" (click)="cardImage('frontal', 'reference')">
+              <ion-icon name="card-outline" *ngIf="!frontImageRef" style="font-size: 100px; color: #01192f;"></ion-icon>
+              <img *ngIf="frontImageRef" [src]="frontImageRef" />
             </div>
-
-            <!-- ================== Email ==================--> 
-
-            <app-custom-input
-            autocomplete="email" 
-            icon="mail-outline"
-            [control] ="form.controls['email']"
-            type="email" 
-            label="Correo" 
-            ></app-custom-input>
-
-            <div class="validators" *ngIf="form.controls['email'].errors && form.controls['email'].touched">
-                <div *ngIf="form.controls['email'].errors?.['required']">El correo es requerido</div>
-                <div *ngIf="form.controls['email'].errors?.['email']">Ingresa un correo válido</div>
+            <div>
+              <h3>Cara posterior de su documento</h3>
             </div>
-
-             <!-- ================== Cellphone ==================--> 
-             <app-custom-input
-             autocomplete="phone_number" 
-             icon="call-outline"
-             [control] ="form.controls['phone_number']"
-             type="number" 
-             label="Celular" 
-             maxlength="10"
-             ></app-custom-input>
- 
-             <div class="validators" *ngIf="form.controls['phone_number'].errors && form.controls['phone_number'].touched">
-                 <div *ngIf="form.controls['phone_number'].errors?.['required']">El celular es requerido</div>
-                 <div *ngIf="form.controls['phone_number'].errors?.['minlength']">El celular debe tener 10 números</div>
-             </div>
-            
-            <!-- ================== Password ==================--> 
-            <!--{{form.value.email}}--> 
-            <app-custom-input 
-            icon="lock-closed-outline"
-            [control] ="form.controls['password']"
-            type="password"
-            label="Contraseña"
-            ></app-custom-input>
-            <!--{{form.value | json}}-->
-            <div class="validators" *ngIf="form.controls['password'].errors && form.controls['password'].touched">
-                <div *ngIf="form.controls['password'].errors?.['required']">La contraseña es requerida</div>
+            <div class="image-box" (click)="cardImage('posterior', 'reference')">
+              <ion-icon name="card-outline" *ngIf="!backImageRef" style="font-size: 100px; color: #01192f;"></ion-icon>
+              <img *ngIf="backImageRef" [src]="backImageRef" />
             </div>
-         
-            <ion-button expand="block" mode="ios" class="submit" routerLink="/reference" [disabled]="form.invalid">
-              Continuar
-                <ion-icon slot="end" name="arrow-forward-outline"></ion-icon>
-            </ion-button>
-        </form> 
-    </div>
+          </div>
+        </div>
+
+
+
+        <ion-button expand="block" mode="ios" class="submit" (click)="submit()">
+          Registrarse
+          <ion-icon slot="end" name="arrow-forward-outline"></ion-icon>
+        </ion-button>
+      </ng-container>
+    </form>
+  </div>
 </ion-content>
