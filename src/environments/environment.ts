@@ -3,10 +3,15 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
+
   production: false,
   apiKey: 'pk.eyJ1Ijoic2Vic3RpaWFuIiwiYSI6ImNsdTl5eGV0NzBlaGsycXBubDlrd2xoZjIifQ.3cUWTjnCSnAmVUW--A9NDA',
   backStations: 'http://localhost:8080/api/v1/stations',
+  tokenLogin: '',
+  auth: ''
 };
+
+
 
 /*
  * For easier debugging in development mode, you can import the following file

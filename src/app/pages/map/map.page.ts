@@ -23,13 +23,15 @@ import { HttpClientModule } from '@angular/common/http';
 import { Stage, Station } from 'src/app/interfaces/station';
 import { VehicleListComponent } from 'src/app/components/vehicle-list/vehicle-list.component';
 import { MenuController } from '@ionic/angular';
+import { RouterLinkWithHref } from '@angular/router';
+
 
 @Component({
   selector: 'app-map',
   templateUrl: './map.page.html',
   styleUrls: ['./map.page.scss'],
   standalone: true,
-  imports: [IonicModule, CommonModule, FormsModule, LoadingComponent, MapViewComponent, ZippyLogoComponent, SearchBarResultsComponent, HttpClientModule, HeaderComponent, VehicleListComponent],
+  imports: [IonicModule, CommonModule, FormsModule, LoadingComponent, MapViewComponent, ZippyLogoComponent, SearchBarResultsComponent, HttpClientModule, HeaderComponent, VehicleListComponent, RouterLinkWithHref],
   providers: [HttpClientModule]
 })
 export class MapPage {

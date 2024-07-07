@@ -1,21 +1,21 @@
-<app-header  title='Login'></app-header>
+<app-header title='Login'></app-header>
 <ion-menu side="end" contentId="main-content" menuId="menu-id" class="menu-hidden"></ion-menu>
 <ion-content>
   <div class="d-flex-center">
-    <form [formGroup]="form" class="auth-form" (ngSubmit)="submit()" (keypress.enter)="submit">
+    <form [formGroup]="form" class="auth-form" (ngSubmit)="submit()" (keypress.enter)="submit()">
       <app-zippy-logo></app-zippy-logo>
       <!-- ================== Email Input Field ==================--> 
       <app-custom-input
-        autocomplete="email"
+        autocomplete="username"
         icon="mail-outline"
-        [control]="form.controls['email']"
-        type="email" 
+        [control]="form.controls['username']"
+        type="username" 
         label="Correo">
       </app-custom-input>
-      <!-- ================== Email Validation Messages ==================-->
-      <div class="validators" *ngIf="form.controls['email'].errors && form.controls['email'].touched">
-        <div *ngIf="form.controls['email'].errors?.['required']">El correo es requerido</div>
-        <div *ngIf="form.controls['email'].errors?.['email']">Ingrese un correo válido</div>
+      <!-- ================== username Validation Messages ==================-->
+      <div class="validators" *ngIf="form.controls['username'].errors && form.controls['username'].touched">
+        <div *ngIf="form.controls['username'].errors?.['required']">El correo es requerido</div>
+        <div *ngIf="form.controls['username'].errors?.['username']">Ingrese un correo válido</div>
       </div>
 
       <!-- ================== Password Input Field ==================--> 
@@ -29,12 +29,18 @@
       <div class="validators" *ngIf="form.controls['password'].errors && form.controls['password'].touched">
         <div *ngIf="form.controls['password'].errors?.['required']">La contraseña es requerida</div>
       </div>
+      
+      <!-- ================== Error Message ==================-->
+      <div *ngIf="errorMessage" class="error-message">
+        {{ errorMessage }}
+      </div>
+
       <!-- ================== Forgot Password Link ==================-->
       <ion-text color="primary" class="ion-text-end" routerLink="/forgot-password">
         ¿Olvidaste tu contraseña?
       </ion-text>
       <!-- ================== Submit Button ==================-->
-      <ion-button expand="block" mode="ios" routerLink="/map" class="submit" type="submit" [disabled]="form.invalid">
+      <ion-button expand="block" mode="ios" class="submit" type="submit"  [disabled]="form.invalid">
         Iniciar sesión
         <ion-icon slot="end" name="log-in-outline"></ion-icon>
       </ion-button>

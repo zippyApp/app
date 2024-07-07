@@ -7,34 +7,34 @@
 
             <!-- ================== First Names ==================--> 
             <app-custom-input
-            autocomplete="first_names" 
+            autocomplete="firstNames" 
             icon="person-outline"
-            [control] ="form.controls['first_names']"
+            [control] ="form.controls['firstNames']"
             type="text" 
             label="Nombres" 
-            ></app-custom-input>
+            ></app-custom-input>  
 
-            <div class="validators" *ngIf="form.controls['first_names'].errors && form.controls['first_names'].touched">
-                <div *ngIf="form.controls['first_names'].errors?.['required']">Debe ingresar al menos un nombre</div>
-                <div *ngIf="form.controls['first_names'].errors?.['minlength']">El nombre debe tener 4 caracteres</div>
+            <div class="validators" *ngIf="form.controls['firstNames'].errors && form.controls['firstNames'].touched">
+                <div *ngIf="form.controls['firstNames'].errors?.['required']">Debe ingresar al menos un nombre</div>
+                <div *ngIf="form.controls['firstNames'].errors?.['minlength']">El nombre debe tener 4 caracteres</div>
             </div>
             <!-- ================== Last Names ==================--> 
             <app-custom-input
-            autocomplete="last_names" 
+            autocomplete="lastNames" 
             icon="person-outline"
-            [control] ="form.controls['last_names']"
+            [control] ="form.controls['lastNames']"
             type="text" 
             label="Apellidos" 
             ></app-custom-input>
 
-            <div class="validators" *ngIf="form.controls['last_names'].errors && form.controls['last_names'].touched">
-                <div *ngIf="form.controls['last_names'].errors?.['required']">Debe ingresar al menos un apellido</div>
-                <div *ngIf="form.controls['last_names'].errors?.['minlength']">El apellido debe tener 4 caracteres</div>
+            <div class="validators" *ngIf="form.controls['lastNames'].errors && form.controls['lastNames'].touched">
+                <div *ngIf="form.controls['lastNames'].errors?.['required']">Debe ingresar al menos un apellido</div>
+                <div *ngIf="form.controls['lastNames'].errors?.['minlength']">El apellido debe tener 4 caracteres</div>
             </div>
             <!-- ================== Type Document ==================--> 
             <ion-list color="primary">          
-              <ion-item [class.invalid]="form.controls['document_type'].errors && form.controls['document_type'].touched">
-                <ion-select formControlName="document_type" interface="action-sheet" label="Tipo de documento">
+              <ion-item [class.invalid]="form.controls['type'].errors && form.controls['type'].touched">
+                <ion-select formControlName="type" interface="action-sheet" label="Tipo de documento">
                   <ion-select-option value="CC">CC</ion-select-option>
                   <ion-select-option value="CE">CE</ion-select-option>
                   <ion-select-option value="TI">TI</ion-select-option>
@@ -43,23 +43,23 @@
               </ion-item>
             </ion-list>
 
-            <div class="validators" *ngIf="form.controls['document_type'].errors && form.controls['document_type'].touched">
-              <div *ngIf="form.controls['document_type'].errors?.['required']">Debes selccionar un tipo de documento</div>
+            <div class="validators" *ngIf="form.controls['type'].errors && form.controls['type'].touched">
+              <div *ngIf="form.controls['type'].errors?.['required']">Debes selccionar un tipo de documento</div>
           </div>
 
             <!-- ================== Document ==================--> 
             <app-custom-input
-            autocomplete="document" 
+            autocomplete="number" 
             icon="card-outline"
-            [control] ="form.controls['document']"
+            [control] ="form.controls['number']"
             type="number" 
-            label="Documento"
+            label="numbero"
             maxlength="10" 
             ></app-custom-input>
 
-            <div class="validators" *ngIf="form.controls['document'].errors && form.controls['document'].touched">
-                <div *ngIf="form.controls['document'].errors?.['required']">El documento es requerido</div>
-                <div *ngIf="form.controls['document'].errors?.['minlength']">El documento debe tener entre 8 y 10 números</div>
+            <div class="validators" *ngIf="form.controls['number'].errors && form.controls['number'].touched">
+                <div *ngIf="form.controls['number'].errors?.['required']">El documento es requerido</div>
+                <div *ngIf="form.controls['number'].errors?.['minlength']">El documento debe tener entre 8 y 10 números</div>
             </div>
            
             <!-- ================== Email ==================--> 
@@ -79,17 +79,17 @@
 
              <!-- ================== Cellphone ==================--> 
              <app-custom-input
-             autocomplete="phone_number" 
+             autocomplete="phone" 
              icon="call-outline"
-             [control] ="form.controls['phone_number']"
+             [control] ="form.controls['phone']"
              type="number" 
              label="Celular" 
              maxlength="10"
              ></app-custom-input>
  
-             <div class="validators" *ngIf="form.controls['phone_number'].errors && form.controls['phone_number'].touched">
-                 <div *ngIf="form.controls['phone_number'].errors?.['required']">El celular es requerido</div>
-                 <div *ngIf="form.controls['phone_number'].errors?.['minlength']">El celular debe tener 10 números</div>
+             <div class="validators" *ngIf="form.controls['phone'].errors && form.controls['phone'].touched">
+                 <div *ngIf="form.controls['phone'].errors?.['required']">El celular es requerido</div>
+                 <div *ngIf="form.controls['phone'].errors?.['minlength']">El celular debe tener 10 números</div>
              </div>
             
            

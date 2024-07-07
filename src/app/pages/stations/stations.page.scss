@@ -29,23 +29,23 @@
       display: flex;
       width: 300%;
       padding-right: 0;
-      padding-left: 0;
+      padding-left: 0; 
       padding-bottom: 100px;
     }
   /* Material Design styles */
   .segment-button-checked.vehiculo.md::ng-deep{
     color: #000000;
-    background-color: #fff75e;
+    background-color: #e0e719;
   }
   .segment-button-checked.estacion.md::ng-deep{
     color: #000000;
-    background-color: #fff75e;
+    background-color: #e0e719;
   }
   .segment-button-checked-md::ng-deep, .vehiculo{
-    --indicator-color: #fbef00;
+    --indicator-color: #e0e719;
   }
   .segment-button-checked-md::ng-deep, .estacion{
-    --indicator-color: #fbef00;
+    --indicator-color: #e0e719;
   }
   .segment-button.md::ng-deep, .vehiculo {
     color: #757475;
@@ -59,7 +59,7 @@
   .vehiculo.ios {
       background-color:  #c0c7c5;
       color:  #000000;
-      --indicator-color : #fff75e!important;
+      --indicator-color : #e0e719!important;
       flex-grow: 1; 
       text-align: center; 
       font-size: 15px;
@@ -69,7 +69,7 @@
   .estacion.ios {
       background-color:  #c0c7c5;
       color:  #000000;
-      --indicator-color : #fff75e!important;
+      --indicator-color : #e0e719!important;
       flex-grow: 1; 
       text-align: center; 
       font-size: 15px;

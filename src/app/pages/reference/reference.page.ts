@@ -23,12 +23,12 @@ import { MenuController } from '@ionic/angular';
 })
 export class ReferencePage implements OnInit {
   form: FormGroup = new FormGroup({
-    first_names: new FormControl('', [Validators.required, Validators.minLength(4)]),
-    last_names: new FormControl('', [Validators.required, Validators.minLength(4)]),
-    document_type: new FormControl('', [Validators.required]),
-    document: new FormControl('', [Validators.required, Validators.pattern('^[0-9]{8,10}$')]),
+    firstNames: new FormControl('', [Validators.required, Validators.minLength(4)]),
+    lastNames: new FormControl('', [Validators.required, Validators.minLength(4)]),
+    type: new FormControl('', [Validators.required]),
+    number: new FormControl('', [Validators.required, Validators.pattern('^[0-9]{8,10}$')]),
     email: new FormControl('', [Validators.required, Validators.email]),
-    phone_number: new FormControl('', [Validators.required, Validators.pattern('^[0-9]{10}$')])
+    phone: new FormControl('', [Validators.required, Validators.pattern('^[0-9]{10}$')])
   });
 
   constructor(private menu: MenuController) { }
