@@ -8,9 +8,10 @@ import { RouterLink } from '@angular/router';
 import { MenuController } from '@ionic/angular';
 import { Camera, CameraResultType } from '@capacitor/camera';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { SignUpService } from '../../services/sign-up.service';  // Asegúrate de tener la ruta correcta
+import { SignUpService } from '../../services/sign-up.service';  
 import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
+
 
 @Component({
   selector: 'app-sign-up',
@@ -114,6 +115,16 @@ export class SignUpPage implements OnInit {
         this.signUpService.register(registerData).subscribe(
             response => {
               environment.tokenLogin = response
+              this.signUpService.getUser(environment.tokenLogin).subscribe(
+                response => {
+                  environment.user = response;
+                  console.log(environment.user)
+                },
+                error => {
+                  console.error("Error no se obtuvo usuario")
+                  
+                }
+              )
                 console.log('Registro exitoso', response);
                 // Maneja la respuesta de éxito
                 this.router.navigate(['/auth']); 
