@@ -2,15 +2,13 @@
 // `ng build` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 
-import { Person } from "./types";
 export const environment = {
 
   production: false,
   apiKey: 'pk.eyJ1Ijoic2Vic3RpaWFuIiwiYSI6ImNsdTl5eGV0NzBlaGsycXBubDlrd2xoZjIifQ.3cUWTjnCSnAmVUW--A9NDA',
   backStations: 'http://localhost:8080/api/v1/stations',
   tokenLogin: '',
-  auth: '',
-  user: {} as Person
+  auth: ''
 };
 
 

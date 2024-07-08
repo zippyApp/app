@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core'; 
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormGroup, FormControl, Validators } from '@angular/forms';
 import { HeaderComponent } from '../../components/header/header.component';
@@ -16,7 +16,7 @@ import { environment } from 'src/environments/environment';
   styleUrls: ['./auth.page.scss'],
   standalone: true,
   imports: [
-    CommonModule,
+    CommonModule, 
     ReactiveFormsModule,
     IonContent, IonText, IonIcon, IonButton, IonMenuButton, IonToolbar, IonButtons, IonTitle, IonMenu,
     HeaderComponent, CustomInputComponent, ZippyLogoComponent, RouterLink
@@ -26,7 +26,7 @@ export class AuthPage implements OnInit {
   form: FormGroup;
   errorMessage: string = '';
 
-  constructor(private menu: MenuController, private authService: AuthService, private router: Router) {
+  constructor(private menu: MenuController, private authService: AuthService, private router: Router) { 
     this.form = new FormGroup({
       username: new FormControl('', [Validators.required, Validators.email]),
       password: new FormControl('', [Validators.required])
@@ -34,7 +34,7 @@ export class AuthPage implements OnInit {
   }
 
   ionViewWillEnter() {
-    this.menu.enable(false, 'menu-id');
+    this.menu.enable(false, 'menu-id'); 
   }
 
   ionViewWillLeave() {
@@ -52,21 +52,9 @@ export class AuthPage implements OnInit {
 
       this.authService.login(loginRequest).subscribe(
         response => {
-
-          environment.tokenLogin = response.token;
-
-          this.authService.getUser(environment.tokenLogin).subscribe(
-            response => {
-              environment.user = response;
-              console.log(environment.user)
-            },
-            error => {
-              console.error("Error no se obtuvo usuario")
-              this.errorMessage = 'Error no se obtuvo usuario';
-            }
-          )
+          environment.tokenLogin = response.token; 
           console.log('Inicio de sesión exitoso', response);
-          this.router.navigate(['/map']);
+          this.router.navigate(['/map']); 
         },
         error => {
           console.error('Error en el inicio de sesión', error);
