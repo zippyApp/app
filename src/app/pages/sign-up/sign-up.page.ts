@@ -156,8 +156,10 @@ export class SignUpPage implements OnInit {
     this.form.controls['birthDate'].setValue(formattedDate);
   }
 
+  title: string = 'Registro';
   goToSecondSection() {
     this.isFirstSection = false;
+    this.title = 'Contacto de emergencia';  // Actualiza el título
   }
 
   async cardImage(side: 'frontal' | 'posterior', section: 'user' | 'reference') {
