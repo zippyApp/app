@@ -23,7 +23,7 @@ export class MapService {
   private map?:Map;
   private markers:Marker[] = [];
 
-  stageObservable: BehaviorSubject<Stage> = new BehaviorSubject<Stage>(this.stage);
+   stageObservable: BehaviorSubject<Stage> = new BehaviorSubject<Stage>(this.stage);
 
 
   originDistance?:number;
@@ -165,7 +165,7 @@ export class MapService {
 
   async getRouteToOrgin(userCoordinates: [number, number], originStationId: number, color: string, routeName: string, currentLocation: [number, number]) {
     return new Promise<void>((resolve, reject) => {
-      this.directionsApi.get<DirectionsResponse>(`user-to-origin/${userCoordinates.join(',')}/${originStationId}`)
+      this.directionsApi.get<DirectionsResponse>(`toOrigin/${userCoordinates.join(',')}/${originStationId}`)
         .subscribe(
           resp => {
             this.drawPolyline(resp.routes[0], color, routeName, currentLocation);
@@ -180,7 +180,7 @@ export class MapService {
 
   async getRouteToDestination(originStationId: number, destinationStationId: number, color: string, routeName: string, currentLocation: [number, number]) {
     return new Promise<void>((resolve, reject) => {
-      this.directionsApi.get<DirectionsResponse>('origin-to-destination/' + `${originStationId}/${destinationStationId}`)
+      this.directionsApi.get<DirectionsResponse>('toDestination/' + `${originStationId}/${destinationStationId}`)
         .subscribe(
           resp => {
             this.drawPolyline(resp.routes[0], color, routeName, currentLocation);

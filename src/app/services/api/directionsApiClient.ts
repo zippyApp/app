@@ -5,7 +5,7 @@ import { environment } from 'src/environments/environment';
 @Injectable({providedIn: 'root'})
 export class DirectionsApiClient extends HttpClient {
 
-  public baseUrl: string = 'http://localhost:9000/api/v1/route/';
+  public baseUrl: string = 'http://localhost:8080/api/v1/route/';
 
   constructor(handler:HttpHandler){
     super(handler);
@@ -14,9 +14,9 @@ export class DirectionsApiClient extends HttpClient {
   public override get<T>(url:string
 
     ){
-    url = this.baseUrl + url;
+     url = this.baseUrl + url;
 
-    return super.get<T>(url,{
+     return super.get<T>(url,{
       params:{
         alternatives:false,
         geometries:'geojson',
@@ -25,7 +25,7 @@ export class DirectionsApiClient extends HttpClient {
         steps:false,
         access_token:environment.apiKey,
       }
-    });
+     });
   }
 
 }
